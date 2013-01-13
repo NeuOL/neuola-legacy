@@ -1,0 +1,34 @@
+extends admin-layout
+
+block admin-stage
+  .main-stage-inner
+    form(action='/admin/article/new',method='POST').form-horizontal
+
+      .control-group
+        label(for='title').control-label 标题
+        .controls
+          input(
+            type='text'
+            name='post[title]'
+          )#title
+      .control-group
+        label(for='body').control-label 内容
+        .controls 
+          textarea(name='post[body]')#body
+      .control-group
+        label(for='url').control-label 自定义URL
+        .controls
+          input(
+            type='text'
+            name='post[url]'
+          )#url
+      .control-group
+        label(for='catalog').control-label 分类
+        .controls
+          input(
+            type='text'
+            name='post[catalog]'
+          )#catalog
+
+      .form-actions
+        button(type='submit').btn.btn-primary 提交

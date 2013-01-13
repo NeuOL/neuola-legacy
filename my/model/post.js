@@ -116,7 +116,8 @@ Post.prototype.save = function save(callback) {
     author: this.author,
     date: this.date,
     state: this.state,
-    catalog: this.catalog
+    catalog: this.catalog,
+    url: this.url
   };
   mongodb.open(function(err, db) {
     if (err) {
@@ -132,7 +133,7 @@ Post.prototype.save = function save(callback) {
       collection.ensureIndex({
         title: post.title,
         catalog: post.catalog,
-        url: url
+        url: post.url
       }, {
         unique: true
       }, function(err) {

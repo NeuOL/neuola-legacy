@@ -20,7 +20,7 @@ block main-stage
               .text= post.author
             .box
               .title
-                a(href='/article/'+post.catalog+'/'+post.title)= post.title
+                a(href='/article/'+post.catalog+'/'+post.getUrl())= post.title
               .date= post.date
               .action
                 a(href='/comment/'+post.url).btn.btn-mini 回复
