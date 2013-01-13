@@ -1,0 +1,28 @@
+extends site
+
+block main-stage
+  .main-stage-inner
+    .page-header
+      h1 谢谢试用
+
+    p.text
+      我们深知自己还有很大的不足。感谢您对我们的关心和支持，如果有什么可以改进的可以提交给我们，我们相信用户的信赖和支持是我们前进的最大动力。
+
+    form(action='/feedback',method='POST').form-horizontal
+      fieldset
+        legend 反馈
+
+        .control-group
+          label(for='comment').control-label 反馈内容
+          .controls
+            textarea(name='feedback[comment]',placeholder='您对本站的感觉')#comment
+
+        .control-group
+          label(for='email').control-label 您的邮箱地址
+          .controls
+            input(type='text',name='feedback[email]',placeholder='Email地址')#email
+
+      .form-actions
+        input(type='submit',value='提交').btn.btn-primary
+        input(type='reset',value='不提交了').btn
+

@@ -1,0 +1,31 @@
+extends site
+
+block append head 
+  link(rel='stylesheet', href='/stylesheets/catalog.css')
+
+block main-stage
+  .main-stage-inner 
+    .page-header
+      h1 
+        | #{title} 
+        small= description
+
+    ul.page-list
+      if posts.length
+        each post in posts
+          li 
+            .author
+              .img
+                img(src='')
+              .text= post.author
+            .box
+              .title
+                a(href='/article/'+post.catalog+'/'+post.title)= post.title
+              .date= post.date
+              .action
+                a(href='/comment/'+post.url).btn.btn-mini 回复
+                | 
+                a(href='/recommend/'+post.url).btn.btn-mini 转载
+      else
+        li No more result.
+

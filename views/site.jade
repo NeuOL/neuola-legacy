@@ -1,0 +1,28 @@
+extends layout
+
+block append head
+  link(rel="stylesheet", href="/stylesheets/site.css")
+
+block content
+  .nav.navbar.navbar-static-top
+    .navbar-inner
+      .container
+        ul.nav
+          li
+            a(href="/") 主页
+          li 
+            a(href="/catalog/news") 新鲜事
+          li
+            a(href="/catalog/test") 测试的世界
+          li
+            a(href="/catalog/explore") 探索
+          li
+            a(href="/about") 关于
+
+  .main-stage.container
+
+    block main-stage
+
+  footer#footer.container
+    p Neuola &copy; yfwz100
+
