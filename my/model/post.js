@@ -131,7 +131,8 @@ Post.prototype.save = function save(callback) {
 
       collection.ensureIndex({
         title: post.title,
-        catalog: post.catalog
+        catalog: post.catalog,
+        url: url
       }, {
         unique: true
       }, function(err) {
