@@ -11,7 +11,11 @@ var User = require('../../my/model/user');
  * Check if the user has login or not.
  */
 exports.checkLogin = function checkLogin(req, res) {
-  return req.session.user != null;
+  if (! req.session.user) {
+    return res.redirect('/admin/login');
+  } else {
+    next();
+  }
 }
 
 /*
