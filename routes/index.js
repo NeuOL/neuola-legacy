@@ -4,17 +4,20 @@
  */
 
 var user = require('./user')
+  , admin = require('./admin/')
   , home = require('./home')
   , article = require('./article');
 
-exports.init = function init(app) {
-  app.all('/', home.index);
-  app.get('/users', user.list);
-  app.get('/no-interest', home.noInterest);
+exports.init = function init(app, pf) {
+  app.all(pf, home.index);
+  app.get(pf + 'users', user.list);
+  app.get(pf + 'no-interest', home.noInterest);
 
-  app.all('/about', home.about);
+  app.all(pf + 'about', home.about);
 
-  app.get('/catalog/:catalog', article.catalog);
-  app.get('/article/:catalog/:article', article.article);
+  app.get(pf + 'catalog/:catalog', article.catalog);
+  app.get(pf + 'article/:catalog/:article', article.article);
+
+  admin.init(app, pf + 'admin/');
 }
 

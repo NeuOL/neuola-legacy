@@ -36,7 +36,7 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-routes.init(app);
+routes.init(app, '/');
 
 //app.get('/', routes.index);
 //app.get('/users', user.list);
