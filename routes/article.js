@@ -22,10 +22,9 @@ exports.catalog = function catalog(req, res) {
 exports.article = function article(req, res) {
   var catalog = req.params.catalog;
   var article = req.params.article;
-  var name = '内部文章';
   Post.getByUrl(catalog, article, function(err, post) {
     res.render('article', {
-      title: name,
+      title: post.title,
       post: post
     });
   });
