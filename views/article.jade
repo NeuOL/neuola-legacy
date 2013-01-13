@@ -5,13 +5,16 @@ block append head
 
 block main-stage
   .main-stage-inner.article
-    h1.title= post.title
-    .info
-      | by 
-      span.author=  post.author 
-      |  @ 
-      span.date= post.date
-    .text
-      :markdown
-        !{post.body}
+    if post
+      h1.title= post.title
+      .info
+        | by 
+        span.author=  post.author 
+        |  @ 
+        span.date= post.date
+      .text
+        :markdown
+          !{post.body}
+    else
+      p No content?
 

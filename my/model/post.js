@@ -1,4 +1,3 @@
-
 var mongodb = require('../db');
 
 function Post(post) {
@@ -8,6 +7,7 @@ function Post(post) {
   this.state = post.state;
   this.date = post.date;
   this.catalog = post.catalog;
+  this.url = post.url;
 }
 
 module.exports = Post;
@@ -18,13 +18,15 @@ Post.list = function list(catalog, callback) {
       return callback(err);
     }
 
-    db.collection('posts', function (err, collection) {
+    db.collection('posts', function(err, collection) {
       if (err) {
         mongodb.close();
         return callback(err);
       }
 
-      collection.find({catalog: catalog}).toArray(function(err, docs) {
+      collection.find({
+        catalog: catalog
+      }).toArray(function(err, docs) {
         mongodb.close();
         if (err) {
           callback(err, null);
@@ -42,8 +44,40 @@ Post.list = function list(catalog, callback) {
   });
 };
 
+Post.getByUrl = function getByUrl(catalog, url, callback) {
+  mongodb.open(function(err, db) {
+    if (err) {
+      callback(err);
+    }
+
+    db.collection('posts', function(err, collection) {
+      if (err) {
+        mongodb.close();
+        callback(err);
+      }
+
+      collection.findOne({
+        "$or": [{
+          title: url,
+          url: null
+        }, {
+          url: url
+        }],
+        catalog: catalog
+      }, function(err, doc) {
+        mongodb.close();
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(err, new Post(doc));
+        }
+      });
+    });
+  });
+};
+
 Post.get = function get(catalog, article, callback) {
-  mongodb.open(function (err, db) {
+  mongodb.open(function(err, db) {
     if (err) {
       return callback(err);
     }
@@ -54,20 +88,26 @@ Post.get = function get(catalog, article, callback) {
         return callback(err);
       }
 
-      collection.findOne({title: article, catalog: catalog}, 
-        function(err, doc) {
-          mongodb.close();
-          if (doc) {
-            var post = new Post(doc);
-            callback(err, post);
-          } else {
-            callback(err, null);
-          }
-        });
+      collection.findOne({
+        title: article,
+        catalog: catalog
+      }, function(err, doc) {
+        mongodb.close();
+        if (doc) {
+          var post = new Post(doc);
+          callback(err, post);
+        } else {
+          callback(err, null);
+        }
+      });
 
     });
   });
 }
+
+Post.prototype.getUrl = function getUrl() {
+  return this.url ? this.url : this.title;
+};
 
 Post.prototype.save = function save(callback) {
   var post = {
@@ -89,14 +129,18 @@ Post.prototype.save = function save(callback) {
         return callback(err);
       }
 
-      collection.ensureIndex(
-        {title: post.title, catalog: post.catalog},
-        {unique: true},
-        function(err) {
-          callback(err);
-        });
+      collection.ensureIndex({
+        title: post.title,
+        catalog: post.catalog
+      }, {
+        unique: true
+      }, function(err) {
+        callback(err);
+      });
 
-      collection.save(post, {safe:true}, function(err, doc) {
+      collection.save(post, {
+        safe: true
+      }, function(err, doc) {
         mongodb.close();
         callback(err);
       });

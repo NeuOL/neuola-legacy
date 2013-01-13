@@ -23,7 +23,7 @@ exports.article = function article(req, res) {
   var catalog = req.params.catalog;
   var article = req.params.article;
   var name = '内部文章';
-  Post.get(catalog, article, function(err, post) {
+  Post.getByUrl(catalog, article, function(err, post) {
     res.render('article', {
       title: name,
       post: post
