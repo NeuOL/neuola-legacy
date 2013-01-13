@@ -16,4 +16,7 @@ exports.init = function init(app, pf) {
   app.post(pf + 'login', user.login);
 
   app.all(pf + 'logout', user.logout);
+
+  app.get(pf + 'register', user.registerView);
+  app.post(pf + 'register', user.register);
 };
