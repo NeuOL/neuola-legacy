@@ -1,0 +1,29 @@
+extends ../site
+
+block main-stage
+  .main-stage-inner
+    form(action='/admin/login',method='POST').form-horizontal
+      fieldset
+        legend= title
+
+        .control-group
+          label(for='username').control-label 用户名
+          .controls
+            input(
+              type='text'
+              placeholder='Email'
+              name='user[name]'
+              )#username
+
+        .control-group
+          label(for='password').control-label 密码
+          .controls
+            input(
+              type='password'
+              placeholder='Passowrd'
+              name='user[pass]'
+              )#password
+
+      .form-actions
+        button(type='submit').btn.btn-primary 登陆
+        button(type='reset').btn 重填
