@@ -6,15 +6,26 @@ var async = require('async')
   , Post = require('../../my/model/post')
   , Catalog = require('../../my/model/catalog');
 
+function fetchCatalogsTask(callback) {
+  Catalog.list({}, function(err, catalogs) {
+    callback(err, catalogs);
+  });
+}
+
 /*
  * The view of the create action.
  * @see #create()
  */
 exports.createView = function createView(req, res) {
-  res.render('admin/edit-article', {
-    title: '创建新文章',
-    post: [],
-    actionUrl: '/admin/article/new'
+  async.series({
+    catalogs: fetchCatalogsTask
+  }, function(err, results) {
+    res.render('admin/edit-article', {
+      title: '创建新文章',
+      post: {},
+      catalogs: results.catalogs,
+      actionUrl: '/admin/article/new'
+    });
   });
 };
 
@@ -73,18 +84,25 @@ exports.updateView = function updateView(req, res) {
   var catalog = req.params.catalog;
   var url = req.params.url;
   var author = req.session.user.name;
-  Post.getByUrl(catalog, url, function(err, post) {
-    if (err || post.author != author) {
+  async.series({
+    post: function (callback) {
+      Post.getByUrl(catalog, url, callback);
+    },
+    catalogs: fetchCatalogsTask
+  }, function(err, results) {
+    if (err || !results.post || results.post.author != author) {
       res.render('error', {
         title: '出错了~',
         message: '您确认这个URL是有效的？',
         link: '/admin/'
       });
     } else {
+      var url = results.post.catalog + '/' + results.post.getUrl();
       res.render('admin/edit-article', {
-        title: '正在编辑' + post.title,
-        post: post,
-        actionUrl: '/admin/article/edit/' + post.catalog + '/' + post.getUrl()
+        title: '正在编辑' + results.post.title,
+        post: results.post,
+        catalogs: results.catalogs,
+        actionUrl: '/admin/article/edit/' + url
       });
     }
   });
@@ -140,11 +158,7 @@ exports.browse = function browse(req, res) {
         callback(err, posts);
       });
     },
-    catalogs: function(callback) {
-      Catalog.list({}, function(err, catalogs) {
-        callback(err, catalogs);
-      });
-    }, 
+    catalogs: fetchCatalogsTask, 
     catalog: function(callback) {
       if (catalog) 
         Catalog.get(catalog, function(err, catalog) {
