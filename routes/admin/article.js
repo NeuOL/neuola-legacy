@@ -9,8 +9,9 @@ var Post = require('../../my/model/post');
  * @see #create()
  */
 exports.createView = function createView(req, res) {
-  res.render('admin/create-article', {
-    title: '创建新文章'
+  res.render('admin/edit-article', {
+    title: '创建新文章',
+    post: []
   });
 };
 

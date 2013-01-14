@@ -10,17 +10,19 @@ block admin-stage
           input(
             type='text'
             name='post[title]'
+            value=post.title
           )#title
       .control-group
         label(for='body').control-label 内容
         .controls 
-          textarea(name='post[body]')#body
+          textarea(name='post[body]')#body= post.body
       .control-group
         label(for='url').control-label 自定义URL
         .controls
           input(
             type='text'
             name='post[url]'
+            value=post.url
           )#url
       .control-group
         label(for='catalog').control-label 分类
@@ -28,6 +30,7 @@ block admin-stage
           input(
             type='text'
             name='post[catalog]'
+            value=post.catalog
           )#catalog
 
       .form-actions
