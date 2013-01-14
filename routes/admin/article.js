@@ -2,7 +2,9 @@
  * The article controller for administration
  */
 
-var Post = require('../../my/model/post');
+var async = require('async')
+  , Post = require('../../my/model/post')
+  , Catalog = require('../../my/model/catalog');
 
 /*
  * The view of the create action.
@@ -11,7 +13,8 @@ var Post = require('../../my/model/post');
 exports.createView = function createView(req, res) {
   res.render('admin/edit-article', {
     title: '创建新文章',
-    post: []
+    post: [],
+    actionUrl: '/admin/article/new'
   });
 };
 
@@ -58,20 +61,116 @@ exports.create = function create(req, res) {
 /*
  * Delete the action by URL.
  */
-exports.remove = function remove(req, res) {};
+exports.remove = function remove(req, res) {
+  // FIXME implement the remove action.
+};
 
 /*
  * The view for update action.
  * @see #update()
  */
-exports.updateView = function updateView(req, res) {};
+exports.updateView = function updateView(req, res) {
+  var catalog = req.params.catalog;
+  var url = req.params.url;
+  var author = req.session.user.name;
+  Post.getByUrl(catalog, url, function(err, post) {
+    if (err || post.author != author) {
+      res.render('error', {
+        title: '出错了~',
+        message: '您确认这个URL是有效的？',
+        link: '/admin/'
+      });
+    } else {
+      res.render('admin/edit-article', {
+        title: '正在编辑' + post.title,
+        post: post,
+        actionUrl: '/admin/article/edit/' + post.catalog + '/' + post.getUrl()
+      });
+    }
+  });
+};
 
 /*
  * The update action.
  */
-exports.update = function update(req, res) {};
+exports.update = function update(req, res) {
+  if (req.body.post.title && req.body.post.body && req.body.post.catalog && req.session.user) {
+    var doc = {
+      title: req.body.post.title,
+      body: req.body.post.body,
+      catalog: req.body.post.catalog,
+      author: req.session.user.name,
+      date: new Date(),
+      url: req.body.url ? req.body.url : req.body.post.title
+    };
+
+    // TODO check if the user have the right to edit the article.
+
+    var post = new Post(doc);
+    post.save(function(err) {
+      if (err) {
+        res.render('error', {
+          title: '出错了~',
+          message: '数据库链接可能出错了~',
+          link: '/admin/'
+        });
+      } else {
+        res.render('done', {
+          title: '完成',
+          message: '完成编辑~',
+          link: '/admin/articles/'
+        });
+      }
+    });
+  }
+};
 
 /*
  * Browse all the records
  */
-exports.browse = function browse(req, res) {};
+exports.browse = function browse(req, res) {
+  var catalog = req.params.catalog;
+  var option = {};
+  if (catalog) {
+    option.catalog = catalog;
+  }
+  async.series({
+    posts: function(callback) {
+      Post.list(option, function(err, posts) {
+        callback(err, posts);
+      });
+    },
+    catalogs: function(callback) {
+      Catalog.list({}, function(err, catalogs) {
+        callback(err, catalogs);
+      });
+    }, 
+    catalog: function(callback) {
+      if (catalog) 
+        Catalog.get(catalog, function(err, catalog) {
+          callback(err, catalog);
+        });
+      else 
+        callback(null, {name:'所有文章'});
+    }
+  }, function(err, results) {
+    if (!err && results.posts && results.catalogs && results.catalog) {
+      res.render('admin/browse', {
+        title: results.catalog.name,
+        catalogs: results.catalogs,
+        posts: results.posts
+      });
+    } else {
+      res.render('error', {
+        title: '文章',
+        message: '没有这个栏目或者数据库出错了~',
+        link: '/admin/'
+      });
+    }
+  });
+};
+
+exports.changeCatalog = function changeCatalog(req, res) {
+  var catalog = req.body.catalog;
+  res.redirect('/admin/catalog/' + catalog + '/');
+};

@@ -1,18 +1,20 @@
 var mongodb = require('../db');
 
 function Post(post) {
-  this.title = post.title;
-  this.body = post.body;
-  this.author = post.author;
-  this.state = post.state;
-  this.date = post.date;
-  this.catalog = post.catalog;
-  this.url = post.url;
+  if (post) {
+    this.title = post.title;
+    this.body = post.body;
+    this.author = post.author;
+    this.state = post.state;
+    this.date = post.date;
+    this.catalog = post.catalog;
+    this.url = post.url;
+  }
 }
 
 module.exports = Post;
 
-Post.list = function list(catalog, callback) {
+Post.list = function list(options, callback) {
   mongodb.open(function(err, db) {
     if (err) {
       return callback(err);
@@ -24,9 +26,7 @@ Post.list = function list(catalog, callback) {
         return callback(err);
       }
 
-      collection.find({
-        catalog: catalog
-      }).toArray(function(err, docs) {
+      collection.find(options).toArray(function(err, docs) {
         mongodb.close();
         if (err) {
           callback(err, null);

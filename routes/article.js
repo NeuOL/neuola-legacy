@@ -1,14 +1,15 @@
-
 /*
  * The Article module
  */
 
-var Post = require('../my/model/post')
-  , Catalog = require('../my/model/catalog');
+var Post = require('../my/model/post'),
+  Catalog = require('../my/model/catalog');
 
 exports.catalog = function catalog(req, res) {
   var catalog = req.params.catalog;
-  Post.list(catalog, function(err, posts) {
+  Post.list({
+    catalog: catalog
+  }, function(err, posts) {
     Catalog.get(catalog, function(err, catalog) {
       res.render('catalog', {
         title: catalog.name,
@@ -29,4 +30,3 @@ exports.article = function article(req, res) {
     });
   });
 };
-

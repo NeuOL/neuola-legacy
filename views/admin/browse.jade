@@ -1,0 +1,32 @@
+extends admin-layout
+
+block admin-stage
+  .action-bar
+    h1= title
+    form(action='/admin/catalog/',method='POST').form-inline
+      label(for='catalog-list') 分类：
+      .input-append
+        select(name='catalog')#catalog-list
+          each catalog in catalogs
+            option(value=catalog.id)= catalog.name
+
+        button(type='submit').btn 转到
+
+  table.table.table-hover
+    thead
+      th 标题
+      th 作者
+      th 日期
+      th 动作
+    tbody
+      each post in posts
+        tr 
+          td= post.title
+          td= post.author
+          td= post.date
+          td.action
+            a(href='/admin/article/edit/'+post.catalog+'/'+post.getUrl()).btn.btn-mini
+              | 编辑
+            | 
+            a(href='/admin/article/del/'+post.catalog+'/'+post.getUrl()).btn.btn-mini
+              | 删除

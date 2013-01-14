@@ -11,6 +11,7 @@ var user = require('./user')
  * Initialize the application with URL prefix.
  */
 exports.init = function init(app, pf) {
+  app.all(pf, user.checkLogin);
   app.all(pf, home.index);
 
   app.get(pf + 'login', user.loginView);
@@ -34,4 +35,7 @@ exports.init = function init(app, pf) {
 
   app.all(pf + 'articles', user.checkLogin);
   app.get(pf + 'articles', article.browse);
+  app.all(pf + 'catalog/:catalog', user.checkLogin);
+  app.get(pf + 'catalog/:catalog', article.browse);
+  app.post(pf + 'catalog/', article.changeCatalog);
 };

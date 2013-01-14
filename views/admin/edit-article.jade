@@ -2,7 +2,7 @@ extends admin-layout
 
 block admin-stage
   .main-stage-inner
-    form(action='/admin/article/new',method='POST').form-horizontal
+    form(action='#{actionUrl}',method='POST').form-horizontal
 
       .control-group
         label(for='title').control-label 标题
