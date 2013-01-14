@@ -2,14 +2,12 @@
  * The article controller for administration
  */
 
-var async = require('async')
-  , Post = require('../../my/model/post')
-  , Catalog = require('../../my/model/catalog');
+var async = require('async'),
+  Post = require('../../my/model/post'),
+  Catalog = require('../../my/model/catalog');
 
-function fetchCatalogsTask(callback) {
-  Catalog.list({}, function(err, catalogs) {
-    callback(err, catalogs);
-  });
+function fetchAllCatalogsTask(callback) {
+  Catalog.list({}, callback);
 }
 
 /*
@@ -18,7 +16,7 @@ function fetchCatalogsTask(callback) {
  */
 exports.createView = function createView(req, res) {
   async.series({
-    catalogs: fetchCatalogsTask
+    catalogs: fetchAllCatalogsTask
   }, function(err, results) {
     res.render('admin/edit-article', {
       title: '创建新文章',
@@ -85,10 +83,10 @@ exports.updateView = function updateView(req, res) {
   var url = req.params.url;
   var author = req.session.user.name;
   async.series({
-    post: function (callback) {
+    post: function(callback) {
       Post.getByUrl(catalog, url, callback);
     },
-    catalogs: fetchCatalogsTask
+    catalogs: fetchAllCatalogsTask
   }, function(err, results) {
     if (err || !results.post || results.post.author != author) {
       res.render('error', {
@@ -123,7 +121,6 @@ exports.update = function update(req, res) {
     };
 
     // TODO check if the user have the right to edit the article.
-
     var post = new Post(doc);
     post.save(function(err) {
       if (err) {
@@ -148,7 +145,13 @@ exports.update = function update(req, res) {
  */
 exports.browse = function browse(req, res) {
   var catalog = req.params.catalog;
-  var option = {};
+  var option = {
+    author: req.session.user.name,
+    catalog: {
+      "$exists": true,
+      "$nin": [null]
+    }
+  };
   if (catalog) {
     option.catalog = catalog;
   }
@@ -158,14 +161,14 @@ exports.browse = function browse(req, res) {
         callback(err, posts);
       });
     },
-    catalogs: fetchCatalogsTask, 
+    catalogs: fetchAllCatalogsTask,
     catalog: function(callback) {
-      if (catalog) 
-        Catalog.get(catalog, function(err, catalog) {
-          callback(err, catalog);
-        });
-      else 
-        callback(null, {name:'所有文章'});
+      if (catalog) Catalog.get(catalog, function(err, catalog) {
+        callback(err, catalog);
+      });
+      else callback(null, {
+        name: '所有文章'
+      });
     }
   }, function(err, results) {
     if (!err && results.posts && results.catalogs && results.catalog) {
