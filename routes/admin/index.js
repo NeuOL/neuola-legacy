@@ -1,41 +1,58 @@
 
-/*
- * Routes for Administration
- */
-
 var user = require('./user')
   , home = require('./home')
   , article = require('./article');
 
-/*
- * Initialize the application with URL prefix.
+/**
+ * URL patterns for the administration site.
  */
-exports.init = function init(app, pf) {
-  app.all(pf, user.checkLogin);
-  app.all(pf, home.index);
+module.exports = {
+  all: user.checkLogin,
+  all: home.index,
 
-  app.get(pf + 'login', user.loginView);
-  app.post(pf + 'login', user.login);
+  'login': {
+    get: user.loginView,
+    post: user.login
+  },
 
-  app.all(pf + 'logout', user.logout);
+  'logout': {
+    all: user.logout
+  },
 
-  app.get(pf + 'register', user.registerView);
-  app.post(pf + 'register', user.register);
+  'register': {
+    get: user.registerView,
+    post: user.register
+  },
 
-  app.all(pf + 'article/new', user.checkLogin);
-  app.get(pf + 'article/new', article.createView);
-  app.post(pf + 'article/new', article.create);
+  'article/': {
+    'new': {
+      all: user.checkLogin,
+      get: article.createView,
+      post: article.create
+    },
+    'edit/:catalog/:url': {
+      all: user.checkLogin,
+      get: article.updateView,
+      post: article.update
+    },
+    'del/:catalog/:url': {
+      all: user.checkLogin,
+      post: article.remove
+    }
+  },
 
-  app.all(pf + 'article/edit/:catalog/:url', user.checkLogin);
-  app.get(pf + 'article/edit/:catalog/:url', article.updateView);
-  app.post(pf + 'article/edit/:catalog/:url', article.update);
+  'articles': {
+    all: user.checkLogin,
+    get: article.browse
+  },
+  
+  'catalog/': {
+    all: user.checkLogin,
+    post: article.changeCatalog,
 
-  app.all(pf + 'article/del/:catalog/:url', user.checkLogin);
-  app.post(pf + 'article/del/:catalog/:url', article.remove);
-
-  app.all(pf + 'articles', user.checkLogin);
-  app.get(pf + 'articles', article.browse);
-  app.all(pf + 'catalog/:catalog', user.checkLogin);
-  app.get(pf + 'catalog/:catalog', article.browse);
-  app.post(pf + 'catalog/', article.changeCatalog);
+    ':catalog': {
+      all: user.checkLogin,
+      post: article.browse
+    }
+  }
 };

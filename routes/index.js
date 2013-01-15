@@ -1,21 +1,28 @@
 
-/*
- * GET home page.
- */
-
-var admin = require('./admin/')
+var adminRoutes = require('./admin/')
   , home = require('./home')
   , article = require('./article');
 
-exports.init = function init(app, pf) {
-  app.all(pf, home.index);
-  app.get(pf + 'no-interest', home.noInterest);
+/**
+ * URL patterns for main site.
+ */
+module.exports = {
+  get: home.index,
 
-  app.all(pf + 'about', home.about);
+  'no-interest': {
+    get: home.noInterest
+  },
 
-  app.get(pf + 'catalog/:catalog', article.catalog);
-  app.get(pf + 'article/:catalog/:article', article.article);
+  'about': {
+    all: home.about
+  },
 
-  admin.init(app, pf + 'admin/');
-}
+  'catalog/:catalog': {
+    get: article.catalog
+  },
+  'article/:catalog/:article': {
+    get: article.article
+  },
 
+  'admin/': adminRoutes
+};
