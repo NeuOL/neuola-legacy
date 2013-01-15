@@ -37,7 +37,7 @@ module.exports = {
     },
     'del/:catalog/:url': {
       all: user.checkLogin,
-      post: article.remove
+      all: article.remove
     }
   },
 

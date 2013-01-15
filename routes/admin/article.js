@@ -71,7 +71,24 @@ exports.create = function create(req, res) {
  * Delete the action by URL.
  */
 exports.remove = function remove(req, res) {
-  // FIXME implement the remove action.
+  var catalog = req.params.catalog;
+  var url = req.params.url;
+  Post.getByUrl(catalog, url, function(err, post) {
+    if (err) {
+      res.render('error', {
+        title: '出错了~',
+        message: err,
+        link: '/admin/'
+      });
+    } else {
+      post.remove();
+      res.render('done', {
+        title: '完成',
+        message: '删除文档。',
+        link: '/admin/'
+      });
+    }
+  });
 };
 
 /*

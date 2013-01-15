@@ -2,6 +2,7 @@ var mongodb = require('../db');
 
 function Post(post) {
   if (post) {
+    this._id = post._id;
     this.title = post.title;
     this.body = post.body;
     this.author = post.author;
@@ -151,3 +152,25 @@ Post.prototype.save = function save(callback) {
 
   });
 }
+
+Post.prototype.remove = function(callback) {
+  var doc = {
+    "_id": this._id,
+  };
+  console.log(doc);
+
+  mongodb.open(function(err, db) {
+    if (err) callback(err);
+    db.collection('posts', function(err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      collection.remove(doc, function(err, doc) {
+        mongodb.close();
+        callback(err, doc);
+      });
+    });
+  });
+};
+
