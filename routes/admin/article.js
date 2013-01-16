@@ -191,6 +191,7 @@ exports.browse = function browse(req, res) {
     if (!err && results.posts && results.catalogs && results.catalog) {
       res.render('admin/browse', {
         title: results.catalog.name,
+        catalog: results.catalog,
         catalogs: results.catalogs,
         posts: results.posts
       });
