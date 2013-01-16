@@ -8,7 +8,7 @@ var user = require('./user')
  */
 module.exports = {
   all: user.checkLogin,
-  all: home.index,
+  get: home.index,
 
   'login': {
     get: user.loginView,
