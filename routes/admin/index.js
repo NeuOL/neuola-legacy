@@ -52,7 +52,7 @@ module.exports = {
 
     ':catalog': {
       all: user.checkLogin,
-      post: article.browse
+      get: article.browse
     }
   }
 };

@@ -206,5 +206,5 @@ exports.browse = function browse(req, res) {
 
 exports.changeCatalog = function changeCatalog(req, res) {
   var catalog = req.body.catalog;
-  res.redirect('/admin/catalog/' + catalog + '/');
+  res.redirect('/admin/catalog/' + catalog);
 };
