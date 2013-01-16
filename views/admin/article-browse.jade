@@ -1,8 +1,17 @@
-extends admin-layout
+extends article-layout
+
+block append breadcrumb
+  if catalog.id
+    li
+      span.divider /
+      a(href='/admin/catalog/'+catalog.id)= catalog.name
+  li
+    span.divider /
+    a(href='/admin/article/new'): i.icon-plus
 
 block admin-stage
   .action-bar
-    h1= title
+    h2= title
     form(action='/admin/catalog/',method='POST').form-inline
       label(for='catalog-list') 分类：
       .input-append
@@ -11,6 +20,8 @@ block admin-stage
             option(value=catalog.id)= catalog.name
 
         button(type='submit').btn 转到
+      | &nbsp;
+      a(href='/admin/article/new').btn.btn-success 新建文章
 
   table.table.table-hover
     thead

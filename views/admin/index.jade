@@ -1,4 +1,12 @@
-extends admin-layout
+extends layout
 
 block admin-stage
-  p 点击导航按钮以进行编辑。
+  .page-content.row-fluid
+    .span3
+      ul.nav.nav-tabs.nav-stacked
+        li: a(href='/admin/articles/') 管理文章
+        li: a(href='/admin/pictures/') 图片库
+        li: a(href='/admin/users/') 用户管理
+
+    .span9
+      p 点击导航按钮以进行编辑。

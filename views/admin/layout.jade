@@ -1,1 +1,17 @@
 extends ../site
+
+block append head
+  link(rel='stylesheet',href='/stylesheets/admin.css')
+
+block main-stage
+  .main-stage-inner
+    block title
+      h1 管理页面：#{title}
+
+    ul.breadcrumb
+      block breadcrumb
+        li
+          a(href='/admin/') 管理首页
+
+    block admin-stage
+      

@@ -1,4 +1,13 @@
-extends admin-layout
+extends article-layout
+
+block append breadcrumb
+  if typeof post != 'undefined' && post._id
+    li
+      span.divider /
+      a(href='/admin/catalog/'+post.catalog)= post.catalog
+  li.active
+    span.divider /
+    | 编辑文章
 
 block admin-stage
   .main-stage-inner
@@ -11,14 +20,14 @@ block admin-stage
             type='text'
             name='post[title]'
             value=post.title
-          )#title.span10
+          )#title.span8
       .control-group
         label(for='body').control-label 内容
         .controls 
           textarea(
             name='post[body]'
             rows=10
-          )#body.span10= post.body
+          )#body.span8= post.body
       .control-group
         label(for='url').control-label 自定义URL
         .controls
@@ -26,11 +35,11 @@ block admin-stage
             type='text'
             name='post[url]'
             value=post.url
-          )#url.span10
+          )#url.span8
       .control-group
         label(for='catalog').control-label 分类
         .controls
-          select(name='post[catalog]')#catalog.span10
+          select(name='post[catalog]')#catalog.span8
             each catalog in catalogs
               if catalog.id == post.catalog
                 option(value=catalog.id,selected)= catalog.name

@@ -8,16 +8,17 @@ block content
     .navbar-inner
       .container
         ul.nav
-          li
-            a(href="/") 主页
-          li 
-            a(href="/catalog/news") 新鲜事
-          li
-            a(href="/catalog/test") 测试的世界
-          li
-            a(href="/catalog/explore") 探索
-          li
-            a(href="/about") 关于
+          block navbar
+            li
+              a(href="/") 主页
+            li 
+              a(href="/catalog/news") 新鲜事
+            li
+              a(href="/catalog/test") 测试的世界
+            li
+              a(href="/catalog/explore") 探索
+            li
+              a(href="/about") 关于
 
   .main-stage.container
 
