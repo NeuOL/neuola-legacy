@@ -64,9 +64,13 @@ exports.register = function register(req, res) {
  * The view for the login action.
  */
 exports.loginView = function loginView(req, res) {
-  res.render('admin/login', {
-    title: '登陆'
-  });
+  if (! req.session.user) {
+    res.render('admin/login', {
+      title: '登陆'
+    });
+  } else {
+    res.redirect('/admin/');
+  }
 };
 
 /*
