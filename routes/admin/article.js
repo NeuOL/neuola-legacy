@@ -18,7 +18,7 @@ exports.createView = function createView(req, res) {
   async.series({
     catalogs: fetchAllCatalogsTask
   }, function(err, results) {
-    res.render('admin/article-edit', {
+    res.render('admin/article-edit-page', {
       title: '创建新文章',
       post: {},
       catalogs: results.catalogs,
@@ -113,7 +113,7 @@ exports.updateView = function updateView(req, res) {
       });
     } else {
       var url = results.post.catalog + '/' + results.post.getUrl();
-      res.render('admin/article-edit', {
+      res.render('admin/article-edit-page', {
         title: '正在编辑' + results.post.title,
         post: results.post,
         catalogs: results.catalogs,
@@ -189,7 +189,7 @@ exports.browse = function browse(req, res) {
     }
   }, function(err, results) {
     if (!err && results.posts && results.catalogs && results.catalog) {
-      res.render('admin/article-browse', {
+      res.render('admin/article-browse-page', {
         title: results.catalog.name,
         catalog: results.catalog,
         catalogs: results.catalogs,
