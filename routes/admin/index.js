@@ -1,6 +1,7 @@
 
 var user = require('./user')
   , home = require('./home')
+  , picture = require('./picture')
   , article = require('./article');
 
 /**
@@ -76,5 +77,34 @@ module.exports = {
       }
     }
   },
+
+  'pictures/': {
+    all: user.checkLogin,
+    get: picture.browse,
+
+    'new/': {
+      all: user.checkLogin,
+      post: picture.create,
+      get: picture.createView
+    },
+
+    'update/': {
+      all: user.checkLogin,
+      post: picture.update,
+
+      ':pic': {
+        all: user.checkLogin,
+        get: picture.updateView
+      }
+    },
+
+    'del/:pic': {
+      all: user.checkLogin,
+      get: picture.remove
+    },
+
+    'view/': {
+    }
+  }
   
 };

@@ -1,0 +1,49 @@
+.main-stage-inner
+  form(
+    action='#{actionUrl}'
+    method='POST'
+    enctype='multipart/form-data'
+  ).form-horizontal
+    input(type='hidden',name='pic[oldId]',value='#{pic.id}')
+
+    .control-group
+      label(for='title').control-label 标题
+      .controls
+        input(
+          type='text'
+          name='pic[title]'
+          value=pic.title
+        )#title.span8
+    .control-group
+      label(for='body').control-label 内容
+      .controls 
+        textarea(
+          name='pic[description]'
+          rows=5
+        )#body.span8= pic.description
+    .control-group
+      label(for='url').control-label 资源地址
+      .controls
+        if pic.id
+          input(
+            type='text'
+            name='pic[src]'
+            value=pic.src
+          )#url.span8
+        else
+          input(
+            type='file'
+            name='pic[file]'
+          )#file.span8
+    .control-group
+      label(for='catalog').control-label 分类
+      .controls
+        input(
+          type='text'
+          name='pic[tag]'
+          value=pic.tag
+        )#catalog.span8
+
+    .form-actions
+      button(type='submit').btn.btn-primary 提交
+

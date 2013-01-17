@@ -17,7 +17,10 @@ app.configure(function() {
   app.set('view engine', 'jade');
   app.use(express.favicon());
   app.use(express.logger('dev'));
-  app.use(express.bodyParser());
+  app.use(express.bodyParser({
+    keepExtensions: true,
+    uploadDir: __dirname + '/public/uploads/'
+  }));
   app.use(express.methodOverride());
   app.use(express.cookieParser(setting.cookieSecret));
   app.use(express.session({
@@ -41,16 +44,16 @@ app.map = function(a, route) {
   route = route || '';
   for (var key in a) {
     switch (typeof a[key]) {
-      case 'object':
-        if (key.charAt(0) != '/') {
-          app.map(a[key], route + key);
-        } else {
-          app.map(a[key], key);
-        }
-        break;
-      case 'function':
-        app[key](route, a[key]);
-        break;
+    case 'object':
+      if (key.charAt(0) != '/') {
+        app.map(a[key], route + key);
+      } else {
+        app.map(a[key], key);
+      }
+      break;
+    case 'function':
+      app[key](route, a[key]);
+      break;
     }
   }
 };

@@ -1,0 +1,24 @@
+.action-bar
+  a(href='/admin/pictures/new/').btn.btn-success 新建图片
+  .clearfix
+
+table.table.table-hover
+  thead
+    th 标题
+    th 作者
+    th 日期
+    th 标签
+    th 动作
+  tbody
+    each pic in pics
+      tr 
+        td= pic.title
+        td= pic.src
+        td= pic.update
+        td= pic.tag
+        td.action
+          a(href='/admin/pictures/update/'+pic.id).btn.btn-mini
+            | 编辑
+          | 
+          a(href='/admin/pictures/del/'+pic.id).btn.btn-mini
+            | 删除

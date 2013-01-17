@@ -12,7 +12,10 @@ block main-stage
   .main-stage-inner
     .page-header
       block title
-        h1 管理页面：#{title}
+        if typeof title != 'undefined'
+          h1 管理页面：#{title}
+        else
+          h1 管理页面
 
     block admin-stage
       
