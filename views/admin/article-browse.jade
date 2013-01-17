@@ -4,8 +4,11 @@
     label(for='catalog-list') 分类：
     .input-append
       select(name='catalog')#catalog-list
-        each catalog in catalogs
-          option(value='#{catalog.id}')= catalog.name
+        each c in catalogs
+          if catalog.id  == c.id
+            option(value=c.id,selected)= c.name
+          else
+            option(value=c.id)= c.name
 
       button(type='submit').btn 转到
     | &nbsp;
