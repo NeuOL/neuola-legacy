@@ -1,13 +1,14 @@
 extends article-layout
 
 block append breadcrumb
-  if catalog.id
+  if typeof catalog != 'undefined' && catalog.name
     li
       span.divider /
       a(href='/admin/articles/catalog/view/'+catalog.id)= catalog.name
-  li
-    span.divider /
-    a(href='/admin/article/new'): i.icon-plus
+  else
+    li.active
+      span.divider /
+      span 新建栏目
 
 block admin-stage
-  include article-browse
+  include catalog-edit

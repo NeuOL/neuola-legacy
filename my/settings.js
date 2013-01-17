@@ -6,6 +6,7 @@
 module.exports = {
   cookieSecret: "neuola",
   mongo: {
+    connection: require('./mongoose'),
     db: "qing",
     host: "localhost"
   }

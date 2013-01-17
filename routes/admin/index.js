@@ -47,10 +47,30 @@ module.exports = {
 
     'catalog/': {
       all: user.checkLogin,
-      post: article.catalogAction,
-      get: article.catalogsView,
+      post: article.catalog.action,
+      get: article.catalog.home,
 
-      ':catalog': {
+      'new': {
+        all: user.checkLogin,
+        post: article.catalog.create,
+        get: article.catalog.createView
+      },
+
+      'edit/':{
+        post: article.catalog.update,
+
+        ':catalog': {
+          all: user.checkLogin,
+          get: article.catalog.updateView
+        }
+      },
+
+      'del/:catalog': {
+        all: user.checkLogin,
+        get: article.catalog.remove
+      },
+
+      'view/:catalog': {
         all: user.checkLogin,
         get: article.browse
       }

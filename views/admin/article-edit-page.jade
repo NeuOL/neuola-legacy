@@ -4,7 +4,7 @@ block append breadcrumb
   if typeof post != 'undefined' && post._id
     li
       span.divider /
-      a(href='/admin/catalog/'+post.catalog)= post.catalog
+      a(href='/admin/articles/catalog/view/'+post.catalog)= post.catalog
   li.active
     span.divider /
     | 编辑文章

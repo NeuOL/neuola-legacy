@@ -5,11 +5,11 @@
     .input-append
       select(name='catalog')#catalog-list
         each catalog in catalogs
-          option(value='#{catalog._id}')= catalog.name
+          option(value='#{catalog.id}')= catalog.name
 
       button(type='submit').btn 转到
     | &nbsp;
-    a(href='/admin/articles/catalog').btn 分类管理
+    a(href='/admin/articles/catalog/').btn 分类管理
   a(href='/admin/article/new').btn.btn-success 新建文章
   .clearfix
 

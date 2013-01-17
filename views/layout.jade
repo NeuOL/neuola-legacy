@@ -1,7 +1,10 @@
 doctype 5
 html
   head
-    title= title
+    if typeof title != 'undefined'
+      title= title
+    else
+      title Neuola
     block head
       link(rel='stylesheet', href='/stylesheets/bootstrap/bootstrap.css')
       link(rel='stylesheet', href='/stylesheets/neuola.css')

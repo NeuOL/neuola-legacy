@@ -2,7 +2,7 @@
  * The homepage of the neuol site.
  */
 
-var SlidePic = require('../my/model/slidepic');
+var SlidePic = require('../my/model/picture');
 
 exports.index = function index(req, res) {
   SlidePic.list(3, function(err, slides) {

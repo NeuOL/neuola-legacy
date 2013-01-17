@@ -1,0 +1,28 @@
+.action-bar
+  a(href='/admin/articles/catalog/new').btn.btn-success 新建分类
+  .clearfix
+
+table.table
+  thead
+    tr
+      th 标题
+      th 标识地址
+      th 描述
+      th 动作
+
+  tbody
+    for catalog in catalogs
+      tr
+        td= catalog.name
+        td= catalog.id
+        td= catalog.description
+        td
+          a(href='/admin/articles/catalog/edit/'+catalog.id).btn.btn-mini.
+            编辑 
+          | 
+          a(href='/admin/articles/catalog/del/').btn.btn-mini.
+            删除
+    else
+      tr.no-result
+        td(colspan='4') 还没有分类~
+

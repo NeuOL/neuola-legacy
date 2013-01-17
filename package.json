@@ -11,6 +11,7 @@
     "less-middleware": "*",
     "mongodb": "*",
     "connect-mongo": "*",
+    "mongoose": "*",
     "markdown": "*",
     "async": "*"
   }

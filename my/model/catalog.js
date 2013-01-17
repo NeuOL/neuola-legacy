@@ -3,66 +3,21 @@
  * The catalog model
  */
 
-var mongodb = require('../db');
+var mongoose = require('mongoose');
 
-function Catalog(catalog) {
-  if (catalog == null) return; 
-  this._id = catalog._id;
-  this.name = catalog.name;
-  this.parrent = catalog.parent;
-  this.description = catalog.description;
+var catalogSchema = new mongoose.Schema({
+  name: String,
+  description: String,
+  id: String
+});
+
+catalogSchema.statics.list = function list(options, callback) {
+  this.find(options).exec(callback);
+};
+
+catalogSchema.statics.get = function get(id, callback) {
+  this.findOne({id: id}).exec(callback);
 }
 
-module.exports = Catalog;
+module.exports = mongoose.model('catalogs', catalogSchema);
 
-Catalog.list = function list(options, callback) {
-  mongodb.open(function(err, db) {
-    if (err) {
-      return callback(err);
-    }
-
-    db.collection('catalogs', function(err, collection) {
-      if (err) {
-        mongodb.close();
-        return callback(err);
-      }
-
-      collection.find(options).toArray(function(err, docs) {
-        mongodb.close();
-        if (err) {
-          callback(err, null);
-        } else {
-          var catalogs = [];
-          docs.forEach(function(doc, index) {
-            catalogs.push(new Catalog(doc));
-          });
-          callback(err, catalogs);
-        }
-      });
-    });
-  });
-};
-
-Catalog.get = function get(id, callback) {
-  mongodb.open(function(err, db) {
-    if (err) {
-      return callback(err);
-    }
-
-    db.collection('catalogs', function(err, collection) {
-      if (err) {
-        mongodb.close()
-        return callback(err);
-      }
-
-      collection.findOne({_id: id}, function(err, doc) {
-        mongodb.close();
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(err, new Catalog(doc));
-        }
-      });
-    });
-  });
-};

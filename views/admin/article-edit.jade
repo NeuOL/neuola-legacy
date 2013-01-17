@@ -1,5 +1,6 @@
 .main-stage-inner
   form(action='#{actionUrl}',method='POST').form-horizontal
+    input(type='hidden',name='post[oldId]',value='#{post.url}')
 
     .control-group
       label(for='title').control-label 标题

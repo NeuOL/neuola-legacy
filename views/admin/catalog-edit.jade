@@ -1,0 +1,31 @@
+.main-stage-inner
+  form(action='#{actionUrl}',method='POST').form-horizontal
+    input(type='hidden',name='catalog[oldId]',value='#{catalog.id}')
+
+    .control-group
+      label(for='title').control-label 名称
+      .controls
+        input(
+          type='text'
+          name='catalog[name]'
+          value=catalog.name
+        )#title.span8
+
+    .control-group
+      label(for='description').control-label 描述
+      .controls
+        textarea(
+          name='catalog[description]'
+        )#description.span8= catalog.description
+
+    .control-group
+      label(for='url').control-label 自定义URL
+      .controls
+        input(
+          type='text'
+          name='catalog[id]'
+          value=catalog.id
+        )#url.span8
+
+    .form-actions
+      button(type='submit').btn.btn-primary 提交
