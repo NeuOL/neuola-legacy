@@ -38,7 +38,7 @@ exports.create = function create(req, res) {
       catalog: req.body.post.catalog,
       author: req.session.user.name,
       date: new Date(),
-      url: req.body.url ? req.body.url : req.body.post.title
+      url: req.body.post.url ? req.body.post.url : req.body.post.title
     };
     console.log(doc);
 
@@ -73,7 +73,10 @@ exports.create = function create(req, res) {
 exports.remove = function remove(req, res) {
   var catalog = req.params.catalog;
   var url = req.params.url;
-  Post.getByUrl(catalog, url, function(err, post) {
+  Post.remove({
+    catalog: catalog,
+    url: url
+  }, function(err, post) {
     if (err) {
       res.render('error', {
         title: '出错了~',
@@ -81,7 +84,6 @@ exports.remove = function remove(req, res) {
         link: '/admin/'
       });
     } else {
-      post.remove();
       res.render('done', {
         title: '完成',
         message: '删除文档。',
@@ -333,20 +335,20 @@ exports.catalog = {
 
   remove: function catalogRemove(req, res) {
     var id = req.params.catalog;
-    Catalog.get(id, function(err, catalog) {
-      catalog.remove(function(err) {
-        if (err) {
-          res.render('error', {
-            message: '错误的参数。',
-            link: '/admin/articles/catalog/'
-          });
-        } else {
-          res.render('done', {
-            message: '成功删除。',
-            link: '/admin/articles/catalog/'
-          });
-        }
-      });
+    Catalog.remove({
+      id: id
+    }, function(err) {
+      if (err) {
+        res.render('error', {
+          message: '错误的参数。',
+          link: '/admin/articles/catalog/'
+        });
+      } else {
+        res.render('done', {
+          message: '成功删除。',
+          link: '/admin/articles/catalog/'
+        });
+      }
     });
   }
 
