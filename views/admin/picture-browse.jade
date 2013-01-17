@@ -1,4 +1,15 @@
 .action-bar
+  form(action='/admin/pictures/',method='GET').form-inline
+    label(for='catalog-list') 分类：
+    .input-append
+      input(
+        type='text'
+        name='tag'
+        placeholder='关键字'
+        value=tags
+      )
+
+      button(type='submit').btn.btn-primary 转到
   a(href='/admin/pictures/new/').btn.btn-success 新建图片
   .clearfix
 
@@ -13,7 +24,7 @@ table.table.table-hover
     each pic in pics
       tr 
         td= pic.title
-        td= pic.src
+        td: a(href=pic.src)= pic.src
         td= pic.update
         td= pic.tag
         td.action

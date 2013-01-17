@@ -31,7 +31,7 @@ module.exports = {
     }
     var title = req.body.pic.title;
     var description = req.body.pic.description;
-    var tags = req.body.pic.tag;
+    var tags = req.body.pic.tag?req.body.pic.tag.split(/\s*,\s*/):[];
     if (src && title && description && tags) {
       var pic = new Picture({
         src: src,
@@ -67,7 +67,7 @@ module.exports = {
     var src = req.body.pic.src;
     var title = req.body.pic.title;
     var description = req.body.pic.description;
-    var tags = req.body.pic.tag ? req.body.pic.tag.split(',') : [];
+    var tags = req.body.pic.tag ? req.body.pic.tag.split(/\s*,\s*/) : [];
     if (oldId && src && title && description && tags) {
       Picture.findOneAndUpdate({
         _id: oldId
@@ -103,16 +103,21 @@ module.exports = {
   },
 
   browse: function browse(req, res) {
+    var tags = req.param('tag') ? req.param('tag').split(/[\s*,\s*]/):null;
     async.series({
       pics: function(callback) {
-        Picture.list(10, callback);
+        if (! tags)
+          Picture.list(10, callback);
+        else
+          Picture.find({tag:{$all:tags}}, callback);
       }
     }, function(err, results) {
       if (err) {
         error(res, err, '/admin/pictures/');
       } else {
         res.render('admin/picture-browse-page', {
-          pics: results.pics
+          pics: results.pics,
+          tags: tags
         });
       }
     });
