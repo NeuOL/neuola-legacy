@@ -1,0 +1,13 @@
+extends article-layout
+
+block append breadcrumb
+  if catalog.id
+    li
+      span.divider /
+      a(href='/admin/catalog/'+catalog.id)= catalog.name
+  li
+    span.divider /
+    a(href='/admin/article/new'): i.icon-plus
+
+block admin-stage
+  include article-browse

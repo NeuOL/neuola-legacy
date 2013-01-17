@@ -1,0 +1,13 @@
+extends article-layout
+
+block append breadcrumb
+  if typeof post != 'undefined' && post._id
+    li
+      span.divider /
+      a(href='/admin/catalog/'+post.catalog)= post.catalog
+  li.active
+    span.divider /
+    | 编辑文章
+
+block admin-stage
+  include article-edit
