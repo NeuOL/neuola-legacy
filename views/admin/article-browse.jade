@@ -1,43 +1,33 @@
-extends article-layout
+.action-bar
+  form(action='/admin/articles/catalog/',method='POST').form-inline
+    input(type='hidden',name='action',value='changeCatalog')
+    label(for='catalog-list') 分类：
+    .input-append
+      select(name='catalog')#catalog-list
+        each catalog in catalogs
+          option(value='#{catalog._id}')= catalog.name
 
-block append breadcrumb
-  if catalog.id
-    li
-      span.divider /
-      a(href='/admin/catalog/'+catalog.id)= catalog.name
-  li
-    span.divider /
-    a(href='/admin/article/new'): i.icon-plus
+      button(type='submit').btn 转到
+    | &nbsp;
+    a(href='/admin/articles/catalog').btn 分类管理
+  a(href='/admin/article/new').btn.btn-success 新建文章
+  .clearfix
 
-block admin-stage
-  .action-bar
-    h2= title
-    form(action='/admin/catalog/',method='POST').form-inline
-      label(for='catalog-list') 分类：
-      .input-append
-        select(name='catalog')#catalog-list
-          each catalog in catalogs
-            option(value=catalog.id)= catalog.name
-
-        button(type='submit').btn 转到
-      | &nbsp;
-      a(href='/admin/article/new').btn.btn-success 新建文章
-
-  table.table.table-hover
-    thead
-      th 标题
-      th 作者
-      th 日期
-      th 动作
-    tbody
-      each post in posts
-        tr 
-          td= post.title
-          td= post.author
-          td= post.date
-          td.action
-            a(href='/admin/article/edit/'+post.catalog+'/'+post.getUrl()).btn.btn-mini
-              | 编辑
-            | 
-            a(href='/admin/article/del/'+post.catalog+'/'+post.getUrl()).btn.btn-mini
-              | 删除
+table.table.table-hover
+  thead
+    th 标题
+    th 作者
+    th 日期
+    th 动作
+  tbody
+    each post in posts
+      tr 
+        td= post.title
+        td= post.author
+        td= post.date
+        td.action
+          a(href='/admin/article/edit/'+post.catalog+'/'+post.getUrl()).btn.btn-mini
+            | 编辑
+          | 
+          a(href='/admin/article/del/'+post.catalog+'/'+post.getUrl()).btn.btn-mini
+            | 删除

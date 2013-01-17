@@ -205,7 +205,14 @@ exports.browse = function browse(req, res) {
   });
 };
 
-exports.changeCatalog = function changeCatalog(req, res) {
-  var catalog = req.body.catalog;
-  res.redirect('/admin/catalog/' + catalog);
+exports.catalogAction = function catalogAction(req, res) {
+  var action = req.body.action;
+  switch (action) {
+    case 'changeCatalog':
+      var catalog = req.body.catalog
+      res.redirect('/admin/articles/catalog/' + catalog);
+      break;
+    default:
+      res.redirect('/admin/articles/');
+  }
 };

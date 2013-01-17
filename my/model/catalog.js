@@ -7,7 +7,7 @@ var mongodb = require('../db');
 
 function Catalog(catalog) {
   if (catalog == null) return; 
-  this.id = catalog.id;
+  this._id = catalog._id;
   this.name = catalog.name;
   this.parrent = catalog.parent;
   this.description = catalog.description;
@@ -55,7 +55,7 @@ Catalog.get = function get(id, callback) {
         return callback(err);
       }
 
-      collection.findOne({id: id}, function(err, doc) {
+      collection.findOne({_id: id}, function(err, doc) {
         mongodb.close();
         if (err) {
           callback(err, null);

@@ -1,50 +1,38 @@
-extends article-layout
+.main-stage-inner
+  form(action='#{actionUrl}',method='POST').form-horizontal
 
-block append breadcrumb
-  if typeof post != 'undefined' && post._id
-    li
-      span.divider /
-      a(href='/admin/catalog/'+post.catalog)= post.catalog
-  li.active
-    span.divider /
-    | 编辑文章
+    .control-group
+      label(for='title').control-label 标题
+      .controls
+        input(
+          type='text'
+          name='post[title]'
+          value=post.title
+        )#title.span8
+    .control-group
+      label(for='body').control-label 内容
+      .controls 
+        textarea(
+          name='post[body]'
+          rows=10
+        )#body.span8= post.body
+    .control-group
+      label(for='url').control-label 自定义URL
+      .controls
+        input(
+          type='text'
+          name='post[url]'
+          value=post.url
+        )#url.span8
+    .control-group
+      label(for='catalog').control-label 分类
+      .controls
+        select(name='post[catalog]')#catalog.span8
+          each catalog in catalogs
+            if catalog.id == post.catalog
+              option(value=catalog.id,selected)= catalog.name
+            else
+              option(value=catalog.id)= catalog.name
 
-block admin-stage
-  .main-stage-inner
-    form(action='#{actionUrl}',method='POST').form-horizontal
-
-      .control-group
-        label(for='title').control-label 标题
-        .controls
-          input(
-            type='text'
-            name='post[title]'
-            value=post.title
-          )#title.span8
-      .control-group
-        label(for='body').control-label 内容
-        .controls 
-          textarea(
-            name='post[body]'
-            rows=10
-          )#body.span8= post.body
-      .control-group
-        label(for='url').control-label 自定义URL
-        .controls
-          input(
-            type='text'
-            name='post[url]'
-            value=post.url
-          )#url.span8
-      .control-group
-        label(for='catalog').control-label 分类
-        .controls
-          select(name='post[catalog]')#catalog.span8
-            each catalog in catalogs
-              if catalog.id == post.catalog
-                option(value=catalog.id,selected)= catalog.name
-              else
-                option(value=catalog.id)= catalog.name
-
-      .form-actions
-        button(type='submit').btn.btn-primary 提交
+    .form-actions
+      button(type='submit').btn.btn-primary 提交

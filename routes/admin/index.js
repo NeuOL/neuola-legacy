@@ -41,18 +41,20 @@ module.exports = {
     }
   },
 
-  'articles': {
+  'articles/': {
     all: user.checkLogin,
-    get: article.browse
+    get: article.browse,
+
+    'catalog/': {
+      all: user.checkLogin,
+      post: article.catalogAction,
+      get: article.catalogsView,
+
+      ':catalog': {
+        all: user.checkLogin,
+        get: article.browse
+      }
+    }
   },
   
-  'catalog/': {
-    all: user.checkLogin,
-    post: article.changeCatalog,
-
-    ':catalog': {
-      all: user.checkLogin,
-      get: article.browse
-    }
-  }
 };
