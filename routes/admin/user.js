@@ -46,7 +46,7 @@ exports.register = function register(req, res) {
      * First check the parameters: user[name], user[pass], user[rpass]
      */
     var user = new User({
-      name: req,
+      name: name,
       password: password,
       verified: false,
       description: description
@@ -105,7 +105,7 @@ exports.login = function login(req, res) {
       });
     } else {
       var message = '用户名或密码错误！';
-      if (! user.verified) {
+      if (user && ! user.verified) {
         message = '用户尚未激活。';
       }
       res.render('error', {

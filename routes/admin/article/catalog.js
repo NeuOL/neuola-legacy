@@ -3,6 +3,10 @@ var async = require('async'),
   Post = require('../../../my/model/post'),
   Catalog = require('../../../my/model/catalog');
 
+function fetchAllCatalogsTask(callback) {
+  Catalog.list({}, callback);
+}
+
 module.exports = {
   action: function catalogAction(req, res) {
     var action = req.body.action;
@@ -30,7 +34,7 @@ module.exports = {
   createView: function catalogCreateView(req, res) {
     res.render('admin/catalog-edit-page', {
       title: '创建新分类',
-      actionUrl: '/admin/articles/catalog/edit/',
+      actionUrl: '/admin/articles/catalog/new/',
       catalog: {}
     });
   },
