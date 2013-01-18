@@ -1,8 +1,23 @@
 extends site
 
+block append head
+  meta(
+    http-equiv='refresh'
+    content='5; url='+link
+  )
+  script
+    $(function() {
+      setInterval(function () {
+        var sec = parseInt($('#seconds').text());
+        $('#seconds').text(--sec);
+      }, 1000);
+    });
+
 block main-stage
   .hero-unit
     h1 完成！ ^_^
     p= message
-    a(href=link).btn.btn-primary 继续
+    a(href=link).btn.btn-primary
+      span#seconds 5
+      秒后继续
 

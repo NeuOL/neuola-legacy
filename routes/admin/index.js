@@ -2,6 +2,7 @@
 var user = require('./user')
   , home = require('./home')
   , picture = require('./picture')
+  , message = require('./message')
   , article = require('./article');
 
 /**
@@ -115,6 +116,42 @@ module.exports = {
       all: user.checkLogin,
       get: user.updateView,
       post: user.update
+    },
+
+    'verify/:id': {
+      all: user.checkLogin,
+      get: user.verify
+    }
+  },
+
+  'messages/': {
+    all: user.checkLogin,
+    get: message.browse,
+
+    'sent/': {
+      all: user.checkLogin,
+      get: message.browseSent
+    },
+
+    'recv': {
+      all: user.checkLogin,
+      get: message.browseRecv
+    },
+
+    'new/': {
+      all: user.checkLogin,
+      get: message.createView,
+      post: message.create
+    },
+
+    'view/:id': {
+      all: user.checkLogin,
+      get: message.detail,
+    },
+
+    'del/:id': {
+      all: user.checkLogin,
+      get: message.remove
     }
   }
   

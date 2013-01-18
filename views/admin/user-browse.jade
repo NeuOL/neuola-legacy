@@ -23,8 +23,8 @@ table.table.table-hover#user
         td
           a(href='/admin/users/edit/'+user.id).btn.btn-mini 编辑 
           | 
-          a(href='/admin/users/del/').btn.btn-mini 删除
+          a(href='/admin/users/del/'+user.id).btn.btn-mini 删除
           unless user.verified
             | 
-            a(href='/admin/users/verify/').btn.btn-warning.btn-mini 激活
+            a(href='/admin/users/verify/'+user.id).btn.btn-warning.btn-mini 激活
 

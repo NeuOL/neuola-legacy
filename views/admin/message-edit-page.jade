@@ -1,0 +1,17 @@
+extends message-layout
+
+block append breadcrumb
+  li.active
+    span.divider /
+    span 编辑消息
+
+block admin-stage
+  .main-stage-inner
+    ul.nav.nav-tabs
+      li: a(href='/admin/messages/') 所有消息
+      li: a(href='/admin/messages/recv/') 收到的消息
+      li: a(href='/admin/messages/sent/') 发送的消息
+      li.active.pull-right: a(href='/admin/messages/new/')
+        i.icon-plus 
+        |  发送消息
+    include message-edit

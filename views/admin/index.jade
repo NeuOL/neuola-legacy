@@ -15,7 +15,9 @@ block admin-stage
         a(href='/admin/articles/').btn.btn-block.btn-large 管理文章
         a(href='/admin/pictures/').btn.btn-block.btn-large 图片库
         a(href='/admin/users/').btn.btn-block.btn-large 用户管理
-        a(href='/admin/messages/').btn.btn-block.btn-large 消息
+        a(href='/admin/messages/').btn.btn-block.btn-large
+          | 消息 
+          span.badge.badge-info= numOfUnread?numOfUnread:0
 
     .span9
       p#date

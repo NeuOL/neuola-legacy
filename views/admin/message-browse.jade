@@ -1,0 +1,25 @@
+
+.main-stage-inner
+  table.table.table-hover
+    thead
+      tr
+        th 来自
+        th 发送到
+        th 消息内容
+        th 动作
+
+    tbody
+      for msg in messages
+        tr
+          td.from= msg.from
+          td.to= msg.to
+          td.description= msg.body ? msg.body : '空?！'
+          td
+            if !msg.read && msg.from != user.name
+              a(href='/admin/messages/view/'+msg.id).btn.btn-primary.btn-mini.
+                阅读
+            else
+              a(href='/admin/messages/view/'+msg.id).btn.btn-mini 阅读
+            | 
+            a(href='/admin/messages/del/'+msg.id).btn.btn-mini 删除
+

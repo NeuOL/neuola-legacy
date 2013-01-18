@@ -37,12 +37,20 @@ exports.registerView = function registerView(req, res) {
  * The register action.
  */
 exports.register = function register(req, res) {
-  if (req.body.user.name && req.body.user.pass && req.body.user.rpass && req.body.user.pass == req.body.user.rpass) {
+  var name = req.body.user.name;
+  var password = req.body.user.pass;
+  var rpass = req.body.user.rpass;
+  var description = req.body.user.description;
+  if (name && password && description && password == rpass) {
     /*
      * First check the parameters: user[name], user[pass], user[rpass]
      */
-    var user = new User(req.body.user);
-    user.verified = false;
+    var user = new User({
+      name: req,
+      password: password,
+      verified: false,
+      description: description
+    });
     user.save(function(err) {
       if (!err) {
         res.render('done', {
@@ -166,7 +174,7 @@ exports.update = function update(req, res) {
     description: req.body.user.description
   };
   if (pass == rpass) {
-    updated.pass = pass;
+    updated.password = pass;
   }
   if (req.body.user.verified) {
     updated.verified = req.body.user.verified;
@@ -195,9 +203,7 @@ exports.update = function update(req, res) {
 exports.verify = function verify(req, res) {
   var id = req.params.id;
   var updated = {};
-  if (req.body.user.verified) {
-    updated.verified = req.body.user.verified;
-  }
+  updated.verified = true;
 
   User.findOneAndUpdate({
     _id: id

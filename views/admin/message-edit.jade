@@ -1,0 +1,31 @@
+form(action='/admin/messages/new/', method='POST').form-horizontal
+  .control-group
+    label(for='username').control-label 发送到
+    .controls
+      input(
+        type='text'
+        name='message[to]'
+        placeholder='对方的用户名'
+      )#username.span6
+  .control-group
+    label(for='title').control-label 标题
+    .controls
+      input(
+        type='text'
+        name='message[title]'
+        placeholder='消息标题'
+      )#title.span6
+  .control-group
+    label(for='body').control-label 内容
+    .controls
+      textarea(
+        name='message[body]'
+        rows='5'
+        placeholder='消息内容'
+      )#body.span6
+
+  .form-actions
+    button(type='submit').btn.btn-primary 提交
+    | 
+    button(type='reset').btn 重填
+
