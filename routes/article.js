@@ -30,3 +30,21 @@ exports.article = function article(req, res) {
     });
   });
 };
+
+exports.tag = function tag(req, res) {
+  var tags = req.param('tag')?req.param('tag').split(/\s*,\s*/):[];
+  Post.find({tag:{$all:tags}}, function(err, posts) {
+    if (err) {
+      res.render('error', {
+        message: err,
+        link: '/'
+      });
+    } else {
+      res.render('catalog', {
+        title: tags.toString(),
+        description: '所有关于“' + tags.toString() + '”的文章',
+        posts: posts
+      });
+    }
+  });
+};

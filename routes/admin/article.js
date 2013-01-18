@@ -31,11 +31,13 @@ exports.createView = function createView(req, res) {
  * The create action
  */
 exports.create = function create(req, res) {
+  var tags = req.body.post.tag?req.body.post.tag.split(/\s*,\s*/):[];
   if (req.body.post.title && req.body.post.body && req.body.post.catalog && req.session.user) {
     var doc = {
       title: req.body.post.title,
       body: req.body.post.body,
       catalog: req.body.post.catalog,
+      tag: tags,
       author: req.session.user.name,
       date: new Date(),
       url: req.body.post.url ? req.body.post.url : req.body.post.title
@@ -133,6 +135,7 @@ exports.update = function update(req, res) {
   var title = req.body.post.title;
   var body = req.body.post.body;
   var catalog = req.body.post.catalog;
+  var tags = req.body.post.tag?req.body.post.tag.split(/\s*,\s*/):[];
   var author = req.session.user.name;
   var url = req.body.post.url;
   if (oldId && title && body && catalog && author) {
@@ -140,9 +143,10 @@ exports.update = function update(req, res) {
       title: title,
       body: body,
       catalog: catalog,
+      tag: tags,
       author: author,
       date: new Date(),
-      url: req.body.url ? req.body.url : req.body.post.title
+      url: req.body.post.url ? req.body.post.url : req.body.post.title
     };
 
     // TODO check if the user have the right to edit the article.

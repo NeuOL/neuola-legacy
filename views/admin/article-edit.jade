@@ -34,6 +34,14 @@
               option(value=catalog.id,selected)= catalog.name
             else
               option(value=catalog.id)= catalog.name
+    .control-group
+      label(for='tag').control-label 标签
+      .controls
+        input(
+          type='text'
+          name='post[tag]'
+          value=post.tag
+        )#tag.span8
 
     .form-actions
       button(type='submit').btn.btn-primary 提交

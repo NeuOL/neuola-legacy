@@ -23,6 +23,9 @@ module.exports = {
   'article/:catalog/:article': {
     get: article.article
   },
+  'articles/': {
+    get: article.tag
+  },
 
   'admin/': adminRoutes
 };

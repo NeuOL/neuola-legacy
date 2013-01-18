@@ -8,6 +8,7 @@ var postSchema = new mongoose.Schema({
   state: String,
   date: Date,
   catalog: String,
+  tag: [String],
   url: String
 });
 

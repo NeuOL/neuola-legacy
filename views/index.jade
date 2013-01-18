@@ -12,10 +12,11 @@ block main-stage
   .logo.hero-unit
     h1 不仅是一个假设
     p 这个世界，不是缺少美，而是缺少发现美的眼睛。
-    .input-append
-      input(type='text', placeholder='发现有趣的东西~').span3
-      button(type='button').btn.btn-primary 搜索
-      a(type='button',href='/no-interest').btn 反馈
+    form(action='/articles/', method='GET')
+      .input-append
+        input(type='text',name='tag',placeholder='发现有趣的东西~').span3
+        button(type='submit').btn.btn-primary 搜索
+        a(type='button',href='/no-interest').btn 反馈
 
     #slides
       .slides_container
