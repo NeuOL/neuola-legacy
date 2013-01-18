@@ -105,6 +105,17 @@ module.exports = {
 
     'view/': {
     }
+  },
+
+  'users/': {
+    all: user.checkLogin,
+    get: user.browse,
+
+    'edit/:id': {
+      all: user.checkLogin,
+      get: user.updateView,
+      post: user.update
+    }
   }
   
 };

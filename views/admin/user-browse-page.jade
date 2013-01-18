@@ -1,0 +1,10 @@
+extends user-layout
+
+block append breadcrumb
+  li
+    span.divider /
+    a(href='/admin/register'): i.icon-plus
+
+block admin-stage
+  include user-browse
+

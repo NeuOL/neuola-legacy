@@ -1,0 +1,10 @@
+extends user-layout
+
+block append breadcrumb
+  li.active
+    span.divider /
+    span 编辑用户
+
+block admin-stage
+  .main-stage-inner
+    include user-edit

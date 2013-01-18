@@ -5,7 +5,8 @@ var userSchema = new mongoose.Schema({
   name: String,
   password: String,
   pic: String,
-  description: String
+  description: String,
+  verified: Boolean
 });
 
 userSchema.statics.get = function get(username, callback) {

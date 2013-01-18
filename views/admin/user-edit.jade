@@ -1,0 +1,41 @@
+form(action=typeof actionUrl!='undefined'?actionUrl:'/admin/register', method='POST').form-horizontal
+  .control-group
+    label(for='username').control-label 用户名
+    .controls
+      input(
+        type='text'
+        name='user[name]'
+        placeholder='Email'
+        value=typeof user != 'undefined'?user.name:''
+      )#username.span6
+  .control-group
+    label(for='password').control-label 密码
+    .controls
+      input(
+        type='password'
+        name='user[pass]'
+        placeholder='Password'
+      )#password.span6
+  .control-group
+    label(for='rpassword').control-label 重输密码
+    .controls
+      input(
+        type='password'
+        name='user[rpass]'
+        placeholder='Re enter password'
+      )#rpassword.span6
+  .control-group
+    label(for='description').control-label 描述
+    .controls
+      textarea(
+        name='user[description]'
+        rows='5'
+      )#description.span6
+        if typeof user != 'undefined'
+          | #{user.description}
+
+  .form-actions
+    button(type='submit').btn.btn-primary 提交
+    | 
+    button(type='reset').btn 重填
+

@@ -1,0 +1,30 @@
+.action-bar
+  a(href='/admin/register').btn.btn-success 注册新用户
+  .clearfix
+
+table.table.table-hover#user
+  thead
+    tr
+      th 用户名
+      th 描述
+      th 激活状态
+      th 动作
+
+  tbody
+    for user in users
+      tr
+        td.name= user.name
+        td.description= user.description ? user.description : '暂无描述。';
+        td.user-state
+          if user.verified
+            span.label.label-success 已激活
+          else
+            span.label.label-warning 未激活
+        td
+          a(href='/admin/users/edit/'+user.id).btn.btn-mini 编辑 
+          | 
+          a(href='/admin/users/del/').btn.btn-mini 删除
+          unless user.verified
+            | 
+            a(href='/admin/users/verify/').btn.btn-warning.btn-mini 激活
+
