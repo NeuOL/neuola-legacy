@@ -81,7 +81,8 @@ exports.login = function login(req, res) {
   var password = req.body.user.pass;
   User.get(username, function(err, user) {
     if (user && username == user.name && password == user.password) {
-      req.session.user = user;
+      req.session.user = user.toJSON();
+      req.session.user.loginDate = new Date;
       res.render('done', {
         title: '登陆成功！',
         message: '成功登陆~',

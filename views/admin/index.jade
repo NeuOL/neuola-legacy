@@ -1,12 +1,31 @@
 extends layout
 
+block append head
+  script(type='text/javascript')
+    $(function() {
+      $('#date').text(Date());
+      setInterval(function () {
+        $('#date').text(Date());
+      }, 1000);
+    });
+
 block admin-stage
   .page-content.row-fluid
     .span3
-      ul.nav.nav-tabs.nav-stacked
-        li: a(href='/admin/articles/') 管理文章
-        li: a(href='/admin/pictures/') 图片库
-        li: a(href='/admin/users/') 用户管理
+        a(href='/admin/articles/').btn.btn-block.btn-large 管理文章
+        a(href='/admin/pictures/').btn.btn-block.btn-large 图片库
+        a(href='/admin/users/').btn.btn-block.btn-large 用户管理
+        a(href='/admin/messages/').btn.btn-block.btn-large 消息
 
     .span9
-      p 点击导航按钮以进行编辑。
+      p#date
+      table.table.table-bordered.user-box
+        tr
+          td(rowspan='2').user-pic
+            img(src=user.pic)
+          td= user.name
+        tr
+          td= user.loginDate
+        tr
+          td(colspan='2')= user.description ? user.description : '暂无描述。'
+      p 选择右边的管理方式进行文章、图片的管理。
