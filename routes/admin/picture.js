@@ -1,20 +1,10 @@
 
 var async = require('async');
 var Picture = require('../../my/model/picture');
+var common = require('../../my/view/common');
 
-function error(res, message, link) {
-  res.render('error', {
-    message: message,
-    link: link
-  });
-}
-
-function info(res, message, link) {
-  res.render('done', {
-    message: message,
-    link: link
-  });
-}
+var error = common.error;
+var info = common.info;
 
 module.exports = {
   createView: function createView(req, res) {

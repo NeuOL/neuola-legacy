@@ -2,7 +2,7 @@
  * The Article module
  */
 
-var common = require('./common');
+var common = require('../my/view/common');
 var Post = require('../my/model/post')
   , Catalog = require('../my/model/catalog');
 

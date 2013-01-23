@@ -2,14 +2,19 @@
  * The homepage of the neuol site.
  */
 
-var SlidePic = require('../my/model/picture');
+var SlidePic = require('../my/model/picture')
+  , common = require('../my/view/common');
 
 exports.index = function index(req, res) {
   SlidePic.list(3, function(err, slides) {
-    res.render('index', {
-      title: 'Neuola',
-      headPics: slides
-    });
+    if (err) {
+      common.error(res, err, '/');
+    } else {
+      res.render('index', {
+        title: 'Neuola',
+        headPics: slides
+      });
+    }
   });
 }
 

@@ -5,6 +5,7 @@
 var async = require('async')
   , Post = require('../../../my/model/post')
   , Catalog = require('../../../my/model/catalog');
+var common = require('../../../my/view/common');
 
 exports.catalog = require('./catalog');
 
@@ -17,7 +18,7 @@ function fetchAllCatalogsTask(callback) {
  * @see #create()
  */
 exports.createView = function createView(req, res) {
-  async.series({
+  async.parallel({
     catalogs: fetchAllCatalogsTask
   }, function(err, results) {
     res.render('admin/article-edit-page', {
@@ -54,20 +55,13 @@ exports.create = function create(req, res) {
           message: '保存错误：' + err,
           link: '/admin/article/new'
         });
+        common.error(res, err, '/admin/article/new');
       } else {
-        res.render('done', {
-          title: '完成',
-          message: '保存成功！',
-          link: '/admin/'
-        });
+        common.info(res, '保存成功！', '/admin/article/new');
       }
     });
   } else {
-    res.render('error', {
-      title: '错误参数',
-      message: '错误参数！',
-      link: '/admin/'
-    });
+    common.error(res, '错误参数！', '/admin/');
   }
 };
 
@@ -82,17 +76,9 @@ exports.remove = function remove(req, res) {
     url: url
   }, function(err, post) {
     if (err) {
-      res.render('error', {
-        title: '出错了~',
-        message: err,
-        link: '/admin/'
-      });
+      common.error(res, err, '/admin/');
     } else {
-      res.render('done', {
-        title: '完成',
-        message: '删除文档。',
-        link: '/admin/'
-      });
+      common.info(res, '删除文档。', '/admn/');
     }
   });
 };
@@ -105,18 +91,14 @@ exports.updateView = function updateView(req, res) {
   var catalog = req.params.catalog;
   var url = req.params.url;
   var author = req.session.user.name;
-  async.series({
+  async.parallel({
     post: function(callback) {
       Post.getByUrl(catalog, url, callback);
     },
     catalogs: fetchAllCatalogsTask
   }, function(err, results) {
     if (err || !results.post || results.post.author != author) {
-      res.render('error', {
-        title: '出错了~',
-        message: '您确认这个URL是有效的？',
-        link: '/admin/'
-      });
+      common.error(res, '您确认这个URL是有效的？');
     } else {
       var url = results.post.catalog + '/' + results.post.getUrl();
       res.render('admin/article-edit-page', {
@@ -157,17 +139,9 @@ exports.update = function update(req, res) {
       author: author
     }, doc, {}, function(err) {
       if (err) {
-        res.render('error', {
-          title: '出错了~',
-          message: '数据库链接可能出错了~',
-          link: '/admin/'
-        });
+        common.error(res, err, '/admin/');
       } else {
-        res.render('done', {
-          title: '完成',
-          message: '完成编辑~',
-          link: '/admin/articles/'
-        });
+        common.info(res, '完成编辑！', '/admin/articles/');
       }
     });
   }
@@ -188,7 +162,7 @@ exports.browse = function browse(req, res) {
   if (catalog) {
     option.catalog = catalog;
   }
-  async.series({
+  async.parallel({
     posts: function(callback) {
       Post.list(option, function(err, posts) {
         callback(err, posts);
@@ -212,13 +186,8 @@ exports.browse = function browse(req, res) {
         posts: results.posts
       });
     } else {
-      res.render('error', {
-        title: '文章',
-        message: '没有这个栏目或者数据库出错了~',
-        link: '/admin/'
-      });
+      common.error(res, err, '/admin/');
     }
   });
 };
-
 

@@ -2,11 +2,12 @@
  * The home controller for administration.
  */
 
-var async = require('async'),
-  Message = require('../../my/model/message');
+var async = require('async')
+var Message = require('../../my/model/message');
+var common = require('../../my/view/common');
 
 exports.index = function index(req, res) {
-  async.series({
+  async.parallel({
     numOfUnread: function(callback) {
       var user = req.session.user;
       Message.count({

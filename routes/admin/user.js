@@ -6,6 +6,7 @@
  */
 
 var User = require('../../my/model/user');
+var common = require('../../my/view/common');
 
 /*
  * Check if the user has login or not.
@@ -53,25 +54,13 @@ exports.register = function register(req, res) {
     });
     user.save(function(err) {
       if (!err) {
-        res.render('done', {
-          title: '完成',
-          link: '/admin/login',
-          message: '成功注册！请等候审核。'
-        });
+        common.info(res, '成功注册！请等候审核。', '/admin/login');
       } else {
-        res.render('error', {
-          title: '出错了！',
-          link: '/admin/register',
-          message: err
-        });
+        common.error(res, err, '/admin/register');
       }
     });
   } else {
-    res.render('error', {
-      title: '出错了！',
-      link: '/admin/register',
-      message: '参数错误。'
-    });
+    common.error(res, '参数错误！', '/admin/register');
   }
 };
 
@@ -98,21 +87,13 @@ exports.login = function login(req, res) {
     if (user && username == user.name && password == user.password && user.verified) {
       req.session.user = user.toJSON();
       req.session.user.loginDate = new Date;
-      res.render('done', {
-        title: '登陆成功！',
-        message: '成功登陆~',
-        link: '/admin/'
-      });
+      common.info(res, '成功登陆~', '/admin/');
     } else {
       var message = '用户名或密码错误！';
       if (user && ! user.verified) {
         message = '用户尚未激活。';
       }
-      res.render('error', {
-        title: '错误!',
-        message: message,
-        link: '/admin/register'
-      });
+      common.error(res, message, '/admin/register');
     } 
   });
 };
@@ -127,6 +108,7 @@ exports.logout = function logout(req, res) {
     link: '/admin/login',
     message: '已经安全退出本系统。'
   });
+  common.info(res, '已经安全退出本系统。', '/admin/login');
 };
 
 exports.browse = function browse(req, res) {
@@ -137,10 +119,7 @@ exports.browse = function browse(req, res) {
         users: users
       });
     } else {
-      res.render('error', {
-        message: err,
-        link: '/admin/'
-      });
+      common.error(res, err, '/admin/');
     }
   });
 };
@@ -151,10 +130,7 @@ exports.updateView = function updateView(req, res) {
     _id: id
   }, function(err, user) {
     if (err) {
-      res.render('error', {
-        message: err,
-        link: '/admin/users/'
-      });
+      common.error(res, err, '/admin/users/');
     } else {
       res.render('admin/user-edit-page', {
         actionUrl: '/admin/users/edit/' + id,
@@ -184,18 +160,12 @@ exports.update = function update(req, res) {
     _id: id
   }, updated, function(err, user) {
     if (err) {
-      res.render('error', {
-        message: err,
-        link: '/admin/users/'
-      });
+      common.error(res, err, '/admin/users');
     } else {
       if (id == req.session.user._id) {
         req.session.user = user;
       }
-      res.render('done', {
-        message: '完成编辑！',
-        link: '/admin/users/'
-      });
+      common.info(res, '完成编辑！', '/admin/users/');
     }
   });
 };
@@ -209,15 +179,9 @@ exports.verify = function verify(req, res) {
     _id: id
   }, updated, function(err, user) {
     if (err) {
-      res.render('error', {
-        message: err,
-        link: '/admin/users/'
-      });
+      common.error(res, err, '/admin/users/');
     } else {
-      res.render('done', {
-        message: '完成激活！',
-        link: '/admin/users/'
-      });
+      common.info(res, '完成激活！', '/admin/users/');
     }
   });
 };

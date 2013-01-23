@@ -1,19 +1,9 @@
 
-var Message = require('../../my/model/message');
+var Message = require('../../my/model/message')
+  , common = require('../../my/view/common');
 
-function info(res, message, link) {
-  res.render('done', {
-    message: message,
-    link: link
-  });
-}
-
-function error(res, message, link) {
-  res.render('error', {
-    message: message,
-    link: link
-  });
-}
+var info = common.info;
+var error = common.error;
 
 module.exports = {
   browse: function browse(req, res) {
