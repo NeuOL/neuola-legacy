@@ -2,7 +2,7 @@ extends layout
 
 block main-stage
   .main-stage-inner
-    form(action='/admin/login',method='POST').form-horizontal
+    form(action=basePath+'/admin/login',method='POST').form-horizontal
       fieldset
         legend= title
 

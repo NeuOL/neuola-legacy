@@ -1,7 +1,7 @@
 extends site
 
 block append head 
-  link(rel='stylesheet', href='/stylesheets/catalog.css')
+  link(rel='stylesheet', href=basePath+'/stylesheets/catalog.css')
 
 block main-stage
   .main-stage-inner 
@@ -20,13 +20,11 @@ block main-stage
                 .text= post.author.name
               .box
                 .title
-                  a(href='/article/'+post.res)= post.title
+                  a(href=basePath+'/article/'+post.res)= post.title
                 .date= post.date
                 .tag= post.tag
                 .action
-                  a(href='/comment/'+post.res).btn.btn-mini 回复
-                  | 
-                  a(href='/recommend/'+post.url).btn.btn-mini 转载
+                  a(href=basePath+'/comment/'+post.res)).btn.btn-mini 回复
               .clearfix
           - var ppost = {author:{}}
           - var position = false

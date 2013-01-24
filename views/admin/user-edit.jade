@@ -1,4 +1,4 @@
-form(action=typeof actionUrl!='undefined'?actionUrl:'/admin/register', method='POST').form-horizontal
+form(action=typeof actionUrl!='undefined'?actionUrl:basePath+'/admin/register', method='POST').form-horizontal
   .control-group
     label(for='username').control-label 用户名
     .controls

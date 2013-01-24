@@ -1,7 +1,7 @@
 extends layout
 
 block append head
-  link(rel="stylesheet", href="/stylesheets/site.css")
+  link(rel="stylesheet", href=basePath+"/stylesheets/site.css")
 
 block content
   .nav.navbar.navbar-static-top
@@ -10,20 +10,20 @@ block content
         ul.nav
           block navbar
             li
-              a(href="/") 主页
+              a(href=basePath+"/") 主页
             li 
-              a(href="/catalog/news") 新鲜事
+              a(href=basePath+"/catalog/news") 新鲜事
             li
-              a(href="/catalog/test") 测试的世界
+              a(href=basePath+"/catalog/test") 测试的世界
             li
-              a(href="/catalog/explore") 探索
+              a(href=basePath+"/catalog/explore") 探索
             li
-              a(href="/about") 关于
+              a(href=basePath+"/about") 关于
 
   .main-stage.container
     block main-stage
 
   footer#footer.container
-    p.pull-right: a(href='/projects') Projects
+    p.pull-right: a(href=basePath+'/projects') Projects
     p Neuola &copy; yfwz100
 

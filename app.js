@@ -2,12 +2,14 @@
  * Module dependencies.
  */
 
-var express = require('express'),
-  routes = require('./routes'),
-  setting = require('./my/settings'),
-  http = require('http'),
-  path = require('path'),
-  MongoStore = require('connect-mongo')(express);
+var express = require('express')
+  , routes = require('./routes')
+  , setting = require('./my/settings')
+  , http = require('http')
+  , path = require('path')
+  , MongoStore = require('connect-mongo')(express);
+
+global.basePath = setting.basePath;
 
 var app = express();
 
@@ -29,11 +31,11 @@ app.configure(function() {
       db: setting.mongo.db
     })
   }));
-  app.use(app.router);
-  app.use(require('less-middleware')({
+  app.use(basePath, app.router);
+  app.use(basePath, require('less-middleware')({
     src: __dirname + '/public'
   }));
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(basePath, express.static(path.join(__dirname, 'public')));
 });
 
 app.configure('development', function() {

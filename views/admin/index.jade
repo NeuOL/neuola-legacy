@@ -12,10 +12,10 @@ block append head
 block admin-stage
   .page-content.row-fluid
     .span3
-        a(href='/admin/articles/').btn.btn-block.btn-large 管理文章
-        a(href='/admin/pictures/').btn.btn-block.btn-large 图片库
-        a(href='/admin/users/').btn.btn-block.btn-large 用户管理
-        a(href='/admin/messages/').btn.btn-block.btn-large
+        a(href=basePath+'/admin/articles/').btn.btn-block.btn-large 管理文章
+        a(href=basePath+'/admin/pictures/').btn.btn-block.btn-large 图片库
+        a(href=basePath+'/admin/users/').btn.btn-block.btn-large 用户管理
+        a(href=basePath+'/admin/messages/').btn.btn-block.btn-large
           | 消息 
           span.badge.badge-info= numOfUnread?numOfUnread:0
 

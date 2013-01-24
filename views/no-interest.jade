@@ -8,7 +8,7 @@ block main-stage
     p.text
       我们深知自己还有很大的不足。感谢您对我们的关心和支持，如果有什么可以改进的可以提交给我们，我们相信用户的信赖和支持是我们前进的最大动力。
 
-    form(action='/feedback',method='POST').form-horizontal
+    form(action=basePath+'/feedback',method='POST').form-horizontal
       fieldset
         legend 反馈
 

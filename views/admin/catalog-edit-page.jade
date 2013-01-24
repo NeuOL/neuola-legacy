@@ -4,7 +4,7 @@ block append breadcrumb
   if typeof catalog != 'undefined' && catalog.name
     li
       span.divider /
-      a(href='/admin/articles/catalog/view/'+catalog.id)= catalog.name
+      a(href=basePath+'/admin/articles/catalog/view/'+catalog.id)= catalog.name
   else
     li.active
       span.divider /
