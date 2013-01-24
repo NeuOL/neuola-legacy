@@ -10,22 +10,46 @@ block main-stage
         | #{title} 
         small= description
 
-    ul.page-list
-      if posts.length
-        each post in posts
-          li 
+    .row-fluid
+      .span8
+        ul.page-list
+          mixin displayPost(post)
             .author
-              .img
-                img(src='')
-              .text= post.author
-            .box
-              .title
-                a(href='/article/'+post.catalog+'/'+post.getUrl())= post.title
-              .date= post.date
-              .action
-                a(href='/comment/'+post.url).btn.btn-mini 回复
-                | 
-                a(href='/recommend/'+post.url).btn.btn-mini 转载
-      else
-        li No more result.
+                .img
+                  img(src=post.author.pic)
+                .text= post.author.name
+              .box
+                .title
+                  a(href='/article/'+post.res)= post.title
+                .date= post.date
+                .tag= post.tag
+                .action
+                  a(href='/comment/'+post.res).btn.btn-mini 回复
+                  | 
+                  a(href='/recommend/'+post.url).btn.btn-mini 转载
+              .clearfix
+          - var ppost = {author:{}}
+          - var position = false
+          each post in posts
+            if ppost.author.name != post.author.name
+              - position = !position
+
+            if position
+              li.post-left
+                mixin displayPost(post)
+            else 
+              li.post-right
+                mixin displayPost(post)
+
+            - ppost = post
+          else
+            li No more result.
+      .span4.sidebar
+        .sidebar-box
+          .title Calendar
+          .content
+            table.table.table-bordered
+              tr
+                td 1
+                td 2
 

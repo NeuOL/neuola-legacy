@@ -13,19 +13,7 @@ block main-stage
         |  @ 
         span.date= post.date
       .text
-        :markdown
-          !{post.body}
+        !{post.html}
     else
       p No content?
-
-  #uyan_frame
-  script(type='text/javascript')
-    var uyan_config = {
-      du: 'test',
-      su: '#{post.catalog}/#{post.getUrl()}'
-    };
-  script(
-    src='http://v1.uyan.cc/js/iframe.js?UYUserId=1735456'
-    async=''
-  )#UYScript
 
