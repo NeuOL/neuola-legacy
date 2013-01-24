@@ -13,5 +13,5 @@ userSchema.statics.get = function get(username, callback) {
   this.findOne({name: username}).exec(callback);
 };
 
-module.exports = mongoose.model('users', userSchema);
+module.exports = mongoose.model('User', userSchema);
 
