@@ -9,8 +9,6 @@ var express = require('express')
   , path = require('path')
   , MongoStore = require('connect-mongo')(express);
 
-global.basePath = setting.basePath;
-
 var app = express();
 
 app.configure(function() {
@@ -31,6 +29,17 @@ app.configure(function() {
       db: setting.mongo.db
     })
   }));
+  // inject path prefix function _ into view.
+  app.use(function (req, res, next) {
+    var r = res.render;
+    res.render = function (url, params) {
+      params._ = function (url) {
+        return basePath + url;
+      }
+      r.call(this, url, params);
+    };
+    next();
+  });
   app.use(basePath, app.router);
   app.use(basePath, require('less-middleware')({
     src: __dirname + '/public'

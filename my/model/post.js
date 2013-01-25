@@ -21,31 +21,25 @@ var postSchema = new mongoose.Schema({
   },
   catalog: String,
   tag: [String],
-  url: String
+  url: {
+    type: String,
+    required: true
+  }
 });
 
 postSchema.statics.list = function list(options, callback) {
   this.find(options).populate('author').exec(callback);
 };
 
-postSchema.statics.getByUrl = function getByUrl(catalog, url, callback) {
+postSchema.statics.getByUrl = function getByUrl(url, callback) {
   this.findOne({
-    catalog: catalog,
-    $or: [{title: url, url:null}, {url: url}]
+    url: url
   }).exec(callback);
 };
-
-postSchema.virtual('res').get(function () {
-  return this.catalog + '/' + this.getUrl();
-});
 
 postSchema.virtual('html').get(function () {
   return require('markdown').markdown.toHTML(this.body);
 });
-
-postSchema.methods.getUrl = function getUrl() {
-  return this.url ? this.url : this.title;
-};
 
 module.exports = mongoose.model('Post', postSchema);
 
