@@ -20,7 +20,7 @@ module.exports = {
   'catalog/:catalog': {
     get: article.catalog
   },
-  'article/:catalog/:article': {
+  'article/:article': {
     get: article.article
   },
   'articles/': {

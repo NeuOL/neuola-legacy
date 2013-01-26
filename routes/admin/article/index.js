@@ -2,9 +2,9 @@
  * The article controller for administration
  */
 
-var async = require('async')
-  , Post = require('../../../my/model/post')
-  , Catalog = require('../../../my/model/catalog');
+var async = require('async'),
+  Post = require('../../../my/model/post'),
+  Catalog = require('../../../my/model/catalog');
 var common = require('../../../my/view/common');
 
 exports.catalog = require('./catalog');
@@ -34,7 +34,7 @@ exports.createView = function createView(req, res) {
  * The create action
  */
 exports.create = function create(req, res) {
-  var tags = req.body.post.tag?req.body.post.tag.split(/\s*,\s*/):[];
+  var tags = req.body.post.tag ? req.body.post.tag.split(/\s*,\s*/) : [];
   if (req.body.post.title && req.body.post.body && req.body.post.catalog && req.session.user) {
     var doc = {
       title: req.body.post.title,
@@ -93,19 +93,18 @@ exports.updateView = function updateView(req, res) {
   var author = req.session.user.name;
   async.parallel({
     post: function(callback) {
-      Post.getByUrl(catalog, url, callback);
+      Post.getByUrl(url, callback);
     },
     catalogs: fetchAllCatalogsTask
   }, function(err, results) {
-    if (err || !results.post || results.post.author != author) {
-      common.error(res, '您确认这个URL是有效的？');
+    if (err || !results.post || results.post.author.name != author) {
+      common.error(res, err); //'您确认这个URL是有效的？', '/admin/');
     } else {
-      var url = results.post.catalog + '/' + results.post.getUrl();
       res.render('admin/article-edit-page', {
         title: '正在编辑' + results.post.title,
         post: results.post,
         catalogs: results.catalogs,
-        actionUrl: '/admin/article/edit/' + url
+        actionUrl: '/admin/article/edit/' + results.post.url
       });
     }
   });
@@ -119,8 +118,8 @@ exports.update = function update(req, res) {
   var title = req.body.post.title;
   var body = req.body.post.body;
   var catalog = req.body.post.catalog;
-  var tags = req.body.post.tag?req.body.post.tag.split(/\s*,\s*/):[];
-  var author = req.session.user.name;
+  var tags = req.body.post.tag ? req.body.post.tag.split(/\s*,\s*/) : [];
+  var author = req.session.user._id;
   var url = req.body.post.url;
   if (oldId && title && body && catalog && author) {
     var doc = {
@@ -153,29 +152,33 @@ exports.update = function update(req, res) {
 exports.browse = function browse(req, res) {
   var catalog = req.params.catalog;
   var option = {
-    author: req.session.user.name,
+    author: req.session.user._id,
+    /*
     catalog: {
       "$exists": true,
       "$nin": [null]
     }
+    */
   };
   if (catalog) {
-    option.catalog = catalog;
+    //option.catalog = catalog;
+    option['catalog.id'] = catalog;
   }
   async.parallel({
     posts: function(callback) {
-      Post.list(option, function(err, posts) {
-        callback(err, posts);
-      });
+      Post.list(option, callback);
     },
     catalogs: fetchAllCatalogsTask,
     catalog: function(callback) {
-      if (catalog) Catalog.get(catalog, function(err, catalog) {
-        callback(err, catalog);
-      });
-      else callback(null, {
-        name: '所有文章'
-      });
+      if (catalog) {
+        Catalog.get(catalog, function(err, catalog) {
+          callback(err, catalog);
+        });
+      } else {
+        callback(null, {
+          name: '所有文章'
+        });
+      }
     }
   }, function(err, results) {
     if (!err && results.posts && results.catalogs && results.catalog) {
@@ -190,4 +193,3 @@ exports.browse = function browse(req, res) {
     }
   });
 };
-

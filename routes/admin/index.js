@@ -32,12 +32,12 @@ module.exports = {
       get: article.createView,
       post: article.create
     },
-    'edit/:catalog/:url': {
+    'edit/:url': {
       all: user.checkLogin,
       get: article.updateView,
       post: article.update
     },
-    'del/:catalog/:url': {
+    'del/:url': {
       all: user.checkLogin,
       all: article.remove
     }

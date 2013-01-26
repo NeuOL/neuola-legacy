@@ -11,7 +11,7 @@ exports.catalog = function catalog(req, res) {
   var catalog = req.params.catalog;
   async.parallel({
     posts: function(callback) {
-      Post.list({catalog: catalog}, callback);
+      Post.list({'catalog.id': catalog}, callback);
     }, 
     catalog: function(callback) {
       Catalog.get(catalog, callback);
@@ -30,9 +30,8 @@ exports.catalog = function catalog(req, res) {
 };
 
 exports.article = function article(req, res) {
-  var catalog = req.params.catalog;
   var article = req.params.article;
-  Post.getByUrl(catalog, article, function(err, post) {
+  Post.getByUrl(article, function(err, post) {
     if (post) {
       res.render('article', {
         title: post.title,
