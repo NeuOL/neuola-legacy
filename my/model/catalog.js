@@ -19,5 +19,5 @@ catalogSchema.statics.get = function get(id, callback) {
   this.findOne({id: id}).exec(callback);
 }
 
-module.exports = mongoose.model('catalogs', catalogSchema);
+module.exports = mongoose.model('Catalog', catalogSchema);
 

@@ -19,7 +19,10 @@ var postSchema = new mongoose.Schema({
     type: Date,
     'default': Date.now,
   },
-  catalog: String,
+  catalog: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Catalog'
+  },
   tag: [String],
   url: {
     type: String,
@@ -28,13 +31,25 @@ var postSchema = new mongoose.Schema({
 });
 
 postSchema.statics.list = function list(options, callback) {
-  this.find(options).populate('author').exec(callback);
+  var self = this;
+  require('./catalog').findOne({
+    id: options['catalog.id']
+  }, function(err, catalog) {
+    if (catalog) {
+      delete options['catalog.id'];
+      options.catalog = catalog._id;
+    }
+    self.find(options)
+        .populate('author')
+        .populate('catalog')
+        .exec(callback);
+  });
 };
 
 postSchema.statics.getByUrl = function getByUrl(url, callback) {
   this.findOne({
     url: url
-  }).exec(callback);
+  }).populate('author').populate('catalog').exec(callback);
 };
 
 postSchema.virtual('html').get(function () {
