@@ -1,7 +1,7 @@
 extends site
 
 block append head
-  link(rel='stylesheet', href=basePath+'/stylesheets/article.css')
+  link(rel='stylesheet', href=_('/stylesheets/article.css'))
 
 block main-stage
   .main-stage-inner.article
@@ -9,7 +9,7 @@ block main-stage
       h1.title= post.title
       .info
         | by 
-        span.author=  post.author 
+        span.author=  post.author.name
         | @ 
         span.date= post.date
       .text

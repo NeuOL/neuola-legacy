@@ -12,10 +12,10 @@ block append head
 block admin-stage
   .page-content.row-fluid
     .span3
-        a(href=basePath+'/admin/articles/').btn.btn-block.btn-large 管理文章
-        a(href=basePath+'/admin/pictures/').btn.btn-block.btn-large 图片库
-        a(href=basePath+'/admin/users/').btn.btn-block.btn-large 用户管理
-        a(href=basePath+'/admin/messages/').btn.btn-block.btn-large
+        a(href=_('/admin/articles/')).btn.btn-block.btn-large 管理文章
+        a(href=_('/admin/pictures/')).btn.btn-block.btn-large 图片库
+        a(href=_('/admin/users/')).btn.btn-block.btn-large 用户管理
+        a(href=_('/admin/messages/')).btn.btn-block.btn-large
           | 消息 
           span.badge.badge-info= numOfUnread?numOfUnread:0
 
@@ -24,7 +24,7 @@ block admin-stage
       table.table.table-bordered.user-box
         tr
           td(rowspan='2').user-pic
-            img(src=user.pic)
+            img(src=_(user.pic))
           td= user.name
         tr
           td= user.loginDate

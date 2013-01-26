@@ -3,10 +3,15 @@ extends site
 block append head
   meta(
     http-equiv='refresh'
-    content='5; url='+basePath+link
+    content='5; url='+_(link)
   )
+  style
+    .secs {
+      display: none;
+    }
   script
     $(function() {
+      $('.secs').css('display', 'inline');
       setInterval(function () {
         var sec = parseInt($('#seconds').text());
         $('#seconds').text(--sec);
@@ -17,7 +22,9 @@ block main-stage
   .hero-unit
     h1 完成！ ^_^
     p= message
-    a(href=basePath+link).btn.btn-primary
-      span#seconds 5
-      秒后继续
+    a(href=_(link)).btn.btn-primary
+      span.secs
+        span#seconds 5
+        | 秒后
+      继续
 

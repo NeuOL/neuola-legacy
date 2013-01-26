@@ -1,5 +1,5 @@
 .action-bar
-  a(href=basePath+'/admin/register').btn.btn-success 注册新用户
+  a(href=_('/admin/register')).btn.btn-success 注册新用户
   .clearfix
 
 table.table.table-hover#user
@@ -21,10 +21,10 @@ table.table.table-hover#user
           else
             span.label.label-warning 未激活
         td
-          a(href=basePath+'/admin/users/edit/'+user.id).btn.btn-mini 编辑 
+          a(href=_('/admin/users/edit/')+user.id).btn.btn-mini 编辑 
           | 
-          a(href=basePath+'/admin/users/del/'+user.id).btn.btn-mini 删除
+          a(href=_('/admin/users/del/')+user.id).btn.btn-mini 删除
           unless user.verified
             | 
-            a(href=basePath+'/admin/users/verify/'+user.id).btn.btn-warning.btn-mini 激活
+            a(href=_('/admin/users/verify/')+user.id).btn.btn-warning.btn-mini 激活
 

@@ -1,13 +1,13 @@
 extends ../site
 
 block append head
-  link(rel='stylesheet',href='/stylesheets/admin.css')
+  link(rel='stylesheet',href=_('/stylesheets/admin.css'))
 
 block main-stage
   ul.breadcrumb#path
     block breadcrumb
       li
-        a(href=basePath+'/admin/') 管理首页
+        a(href=_('/admin/')) 管理首页
 
   .main-stage-inner
     .page-header

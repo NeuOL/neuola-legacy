@@ -1,5 +1,5 @@
 .main-stage-inner
-  form(action='#{actionUrl}',method='POST').form-horizontal
+  form(action=_(actionUrl),method='POST').form-horizontal
     input(type='hidden',name='post[oldId]',value='#{post.url}')
 
     .control-group
@@ -30,10 +30,10 @@
       .controls
         select(name='post[catalog]')#catalog.span8
           each catalog in catalogs
-            if catalog.id == post.catalog
-              option(value=catalog.id,selected)= catalog.name
+            if catalog._id == post.catalog._id
+              option(value=catalog._id,selected)= catalog.name
             else
-              option(value=catalog.id)= catalog.name
+              option(value=catalog._id)= catalog.name
     .control-group
       label(for='tag').control-label 标签
       .controls

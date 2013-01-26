@@ -1,8 +1,8 @@
 extends site
 
 block append head
-  link(rel='stylesheet', href=basePath+'/stylesheets/index.css')
-  script(src=basePath+'/javascripts/slides.jquery.js');
+  link(rel='stylesheet', href=_('/stylesheets/index.css'))
+  script(src=_('/javascripts/slides.jquery.js'));
   script
     $(function() {
       $('#slides').slides({play:5000});
@@ -12,17 +12,17 @@ block main-stage
   .logo.hero-unit
     h1 不仅是一个假设
     p 这个世界，不是缺少美，而是缺少发现美的眼睛。
-    form(action=basePath+'/articles/', method='GET')
+    form(action=_('/articles/'), method='GET')
       .input-append
         input(type='text',name='tag',placeholder='发现有趣的东西~').span3
         button(type='submit').btn.btn-primary 搜索
-        a(type='button',href=basePath+'/no-interest').btn 反馈
+        a(type='button',href=_('/no-interest')).btn 反馈
 
     #slides
       .slides_container
         each img in headPics
           .slide
-            img(src=basePath+img.src,title='#{img.title}')
+            img(src=_(img.src),title='#{img.title}')
             .description
               p #{img.description}
 

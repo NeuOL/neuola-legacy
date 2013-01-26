@@ -3,7 +3,7 @@ extends article-layout
 block append breadcrumb
   li
     span.divider /
-    a(href=basePath+'/admin/articles/catalog/')= title
+    a(href=_('/admin/articles/catalog/'))= title
 
 block admin-stage
   include catalog-browse
