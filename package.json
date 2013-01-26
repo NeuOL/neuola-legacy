@@ -1,6 +1,6 @@
 {
   "name": "neuola",
-  "version": "0.5.0",
+  "version": "0.5.9",
   "private": true,
   "scripts": {
     "start": "node app"
