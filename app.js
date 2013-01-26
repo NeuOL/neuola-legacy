@@ -10,6 +10,7 @@ var express = require('express')
   , MongoStore = require('connect-mongo')(express);
 
 var app = express();
+var basePath = '/neuola';
 
 app.configure(function() {
   app.set('port', process.env.PORT || 3000);
@@ -30,16 +31,7 @@ app.configure(function() {
     })
   }));
   // inject path prefix function _ into view.
-  app.use(function (req, res, next) {
-    var r = res.render;
-    res.render = function (url, params) {
-      params._ = function (url) {
-        return basePath + url;
-      }
-      r.call(this, url, params);
-    };
-    next();
-  });
+  app.use(require('./my/middleware/pathprefix')(basePath));
   app.use(basePath, app.router);
   app.use(basePath, require('less-middleware')({
     src: __dirname + '/public'
