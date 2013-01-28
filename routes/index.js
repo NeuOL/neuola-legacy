@@ -1,31 +1,19 @@
 
-var adminRoutes = require('./admin/')
-  , home = require('./home')
-  , article = require('./article');
+var home = require('../my/ctrls/home')
+  , article = require('../my/ctrls/article');
 
 /**
  * URL patterns for main site.
  */
-module.exports = {
-  get: home.index,
+module.exports = function(app) {
+  app.get('/', home.index);
+  app.get('/no-interest', home.noInterest);
 
-  'no-interest': {
-    get: home.noInterest
-  },
+  app.get('/about', home.about);
 
-  'about': {
-    all: home.about
-  },
+  app.get('/catalog/:catalog', article.catalog);
+  app.get(/^\/article\/(.+)$/, article.article);
+  app.get('/articles/', article.tag);
 
-  'catalog/:catalog': {
-    get: article.catalog
-  },
-  'article/:article': {
-    get: article.article
-  },
-  'articles/': {
-    get: article.tag
-  },
-
-  'admin/': adminRoutes
+  require('./admin')(app);
 };

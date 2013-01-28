@@ -10,44 +10,47 @@ block main-stage
         | #{title} 
         small= description
 
-    .row-fluid
-      .span8
-        ul.page-list
-          mixin displayPost(post)
-            .author
-                .img
-                  img(src=post.author.pic)
-                .text= post.author.name
-              .box
-                .title
-                  a(href=_('/article/'+post.url))= post.title
-                .date= post.date
-                .tag= post.tag
-                .action
-                  a(href=_('/comment/'+post.url)).btn.btn-mini 回复
-              .clearfix
-          - var ppost = {author:{}}
-          - var position = false
-          each post in posts
-            if ppost.author.name != post.author.name
-              - position = !position
+  .catalog-stage
+    mixin displayPost(post)
+      .author
+        .img
+          img(src=_(post.author.pic))
+        .text= post.author.name
+        .date= post.date.getFullYear()+'-'+(post.date.getMonth()+1)+'-'+post.date.getDate()
+      .box
+        .title
+          a(href=_('/article/'+post.url))= post.title
+        .description !{post.html}
+        .tags
+          each t in post.tag
+            span.tag: a(href=_('/articles/?tag='+t))= '#'+t
+      .action
+        a(href=_('/comment/'+post.url)).btn.btn-mini 回复
+      .clearfix
 
-            if position
-              li.post-left
-                mixin displayPost(post)
-            else 
-              li.post-right
-                mixin displayPost(post)
+    .articles
+      - var ppost = {author:{}}
+      - var position = false
+      each post in posts
+        if ppost.author.name != post.author.name
+          - position = !position
 
-            - ppost = post
-          else
-            li No more result.
-      .span4.sidebar
-        .sidebar-box
-          .title Calendar
-          .content
-            table.table.table-bordered
-              tr
-                td 1
-                td 2
+        if position
+          .post.post-left
+            mixin displayPost(post)
+        else 
+          .post.post-right
+            mixin displayPost(post)
+
+        - ppost = post
+      else
+        .alert.alert-info No more result.
+    .sidebar
+      .sidebar-box
+        .title Calendar
+        .content
+          table.table.table-bordered
+            tr
+              td 1
+              td 2
 

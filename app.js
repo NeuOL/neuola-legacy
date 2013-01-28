@@ -43,27 +43,7 @@ app.configure('development', function() {
   app.use(express.errorHandler());
 });
 
-app.map = function(a, route) {
-  route = route || '';
-  for (var key in a) {
-    switch (typeof a[key]) {
-    case 'object':
-      if (key.charAt(0) != '/') {
-        app.map(a[key], route + key);
-      } else {
-        app.map(a[key], key);
-      }
-      break;
-    case 'function':
-      app[key](route, a[key]);
-      break;
-    }
-  }
-};
-
-app.map({
-  '/': routes
-});
+routes(app);
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));

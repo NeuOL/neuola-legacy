@@ -9,14 +9,14 @@
           type='text'
           name='post[title]'
           value=post.title
-        )#title.span8
+        )#title.span6
     .control-group
       label(for='body').control-label 内容
       .controls 
         textarea(
           name='post[body]'
           rows=10
-        )#body.span8= post.body
+        )#body.span6= post.body
     .control-group
       label(for='url').control-label 自定义URL
       .controls
@@ -24,11 +24,11 @@
           type='text'
           name='post[url]'
           value=post.url
-        )#url.span8
+        )#url.span6
     .control-group
       label(for='catalog').control-label 分类
       .controls
-        select(name='post[catalog]')#catalog.span8
+        select(name='post[catalog]')#catalog.span6
           each catalog in catalogs
             if catalog._id == post.catalog._id
               option(value=catalog._id,selected)= catalog.name
@@ -41,7 +41,7 @@
           type='text'
           name='post[tag]'
           value=post.tag
-        )#tag.span8
+        )#tag.span6
 
     .form-actions
       button(type='submit').btn.btn-primary 提交

@@ -1,68 +1,55 @@
 
-.page-list {
-  margin: 0 auto;
+.articles {
+  float: left;
+  width: 660px;
+  margin: 0 10px;
 
-  li {
-    list-style: none;
-    margin: 1em 0;
-    padding: .5em 1em;
+  .post {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    position: relative;
+  }
 
-    &:hover {
-      background-color: #fefefe;
-    }
+  .author {
+    width: 64px;
+    float: left;
+    margin: 10px;
+    text-align: center;
 
-    &.post-left {
-      .author {
-        float: left;
-      }
-    }
-
-    &.post-right {
-      .author {
-        float: right;
-      }
-    }
-
-    .author {
-      width: 64px;
-      height: 100px;
-      padding: 1em;
-
-      .img {
-        width: 64px;
-        height: 64px;
-        line-height: 60px;
-        text-align: center;
-        background-color: #efefef;
-        border-radius: 10px;
-        img {
-          vertical-align: center;
-        }
-      }
-
-      .text {
-        text-align: center;
-      }
-    }
-
-    .box {
-
-      .title {
-        font-size: 1.5em;
-        line-height: 2em;
-
-        border-bottom: 1px solid #efefef;
-      }
-
-      .info {
-        .author {
-          font-weight: 600;
-        }
-      }
-
-      .action {
-        text-align: right;
-      }
+    .date {
+      border-top: 1px solid #efefef;
+      margin-top: 0.5em;
     }
   }
+
+  .box {
+    width: 576px;
+    float: left;
+
+    .title {
+      font-size: 24px;
+      line-height: 30px;
+      padding-bottom: 0.2em;
+      border-bottom: 1px solid #efefef;
+    }
+
+    .description {
+      height: 3em;
+      overflow: hidden;
+      margin: 0.5em;
+    }
+
+  }
+  .action {
+    position: absolute;
+    right: 1em;
+    bottom: 1em;
+  }
+
+}
+
+.sidebar {
+  float: left;
+  width: 240px;
+  margin: 0 10px;
 }

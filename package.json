@@ -12,7 +12,7 @@
     "mongodb": "*",
     "connect-mongo": "*",
     "mongoose": "*",
-    "markdown": "*",
+    "marked": "*",
     "async": "*"
   }
 }

@@ -53,7 +53,7 @@ postSchema.statics.getByUrl = function getByUrl(url, callback) {
 };
 
 postSchema.virtual('html').get(function () {
-  return require('markdown').markdown.toHTML(this.body);
+  return require('marked')(this.body);
 });
 
 module.exports = mongoose.model('Post', postSchema);

@@ -3,9 +3,9 @@
  */
 
 var async = require('async'),
-  Post = require('../../../my/model/post'),
-  Catalog = require('../../../my/model/catalog');
-var common = require('../../../my/view/common');
+  Post = require('../../../model/post'),
+  Catalog = require('../../../model/catalog');
+var common = require('../../../view/common');
 
 exports.catalog = require('./catalog');
 
@@ -43,7 +43,7 @@ exports.create = function create(req, res) {
       tag: tags,
       author: req.session.user._id,
       date: new Date(),
-      url: req.body.post.url ? req.body.post.url : req.body.post.title
+      url: req.body.post.url ? req.body.post.url: req.body.post.title
     };
     console.log(doc);
 
@@ -69,10 +69,8 @@ exports.create = function create(req, res) {
  * Delete the action by URL.
  */
 exports.remove = function remove(req, res) {
-  var catalog = req.params.catalog;
-  var url = req.params.url;
+  var url = req.params[0];
   Post.remove({
-    catalog: catalog,
     url: url
   }, function(err, post) {
     if (err) {
@@ -88,8 +86,7 @@ exports.remove = function remove(req, res) {
  * @see #update()
  */
 exports.updateView = function updateView(req, res) {
-  var catalog = req.params.catalog;
-  var url = req.params.url;
+  var url = req.params[0];
   var author = req.session.user.name;
   async.parallel({
     post: function(callback) {
