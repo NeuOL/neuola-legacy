@@ -42,6 +42,7 @@ postSchema.statics.list = function list(options, callback) {
     self.find(options)
         .populate('author')
         .populate('catalog')
+        .sort({date:-1})
         .exec(callback);
   });
 };

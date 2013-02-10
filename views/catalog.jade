@@ -12,11 +12,9 @@ block main-stage
 
   .catalog-stage
     mixin displayPost(post)
-      .author
-        .img
-          img(src=_(post.author.pic))
-        .text= post.author.name
-        .date= post.date.getFullYear()+'-'+(post.date.getMonth()+1)+'-'+post.date.getDate()
+      .date-box
+        .date= post.date.getDate()
+        .year-month= post.date.getFullYear()+' / '+(post.date.getMonth()+1)
       .box
         .title
           a(href=_('/article/'+post.url))= post.title

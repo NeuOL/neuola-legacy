@@ -10,20 +10,35 @@
     position: relative;
   }
 
-  .author {
+  @dateboxbg: #049cdb;
+
+  .date-box {
     width: 64px;
     float: left;
-    margin: 10px;
+    margin: 8px 18px 8px 8px;
+    border: 2px solid @dateboxbg;
+    border-radius: 5px;
     text-align: center;
+    overflow: hidden;
 
     .date {
-      border-top: 1px solid #efefef;
-      margin-top: 0.5em;
+      background-color: @dateboxbg;
+      font-size: 30px;
+      color: #f3f3f3;
+      line-height: 50px;
+    }
+
+    .year {
+      float: left;
+    }
+
+    .month {
+      float: right;
     }
   }
 
   .box {
-    width: 576px;
+    width: 566px;
     float: left;
 
     .title {
@@ -34,7 +49,7 @@
     }
 
     .description {
-      height: 3em;
+      height: 1.5em;
       overflow: hidden;
       margin: 0.5em;
     }
