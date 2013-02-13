@@ -13,7 +13,7 @@ var common = require('../my/view/common');
  */
 exports.checkLogin = function checkLogin(req, res, next) {
   if (! req.session.user) {
-    return res.redirect('/admin/login');
+    return res.redirect('/user/login');
   } else {
     next();
   }
@@ -24,7 +24,7 @@ exports.checkLogin = function checkLogin(req, res, next) {
  */
 exports.registerView = function registerView(req, res) {
   if (! req.session.user) {
-    res.render('admin/register', {
+    res.render('user/register', {
       title: '注册'
     });
   } else {
@@ -54,13 +54,13 @@ exports.register = function register(req, res) {
     });
     user.save(function(err) {
       if (!err) {
-        common.info(res, '成功注册！请等候审核。', '/admin/login');
+        common.info(res, '成功注册！请等候审核。', '/user/login');
       } else {
-        common.error(res, err, '/admin/register');
+        common.error(res, err, '/user/register');
       }
     });
   } else {
-    common.error(res, '参数错误！', '/admin/register');
+    common.error(res, '参数错误！', '/user/register');
   }
 };
 
@@ -69,7 +69,7 @@ exports.register = function register(req, res) {
  */
 exports.loginView = function loginView(req, res) {
   if (! req.session.user) {
-    res.render('admin/login', {
+    res.render('user/login', {
       title: '登陆'
     });
   } else {
@@ -93,7 +93,7 @@ exports.login = function login(req, res) {
       if (user && ! user.verified) {
         message = '用户尚未激活。';
       }
-      common.error(res, message, '/admin/register');
+      common.error(res, message, '/user/register');
     } 
   });
 };
@@ -103,12 +103,7 @@ exports.login = function login(req, res) {
  */
 exports.logout = function logout(req, res) {
   req.session.user = null;
-  res.render('done', {
-    title: '成功退出',
-    link: '/admin/login',
-    message: '已经安全退出本系统。'
-  });
-  common.info(res, '已经安全退出本系统。', '/admin/login');
+  common.info(res, '已经安全退出本系统。', '/user/login');
 };
 
 exports.browse = function browse(req, res) {
