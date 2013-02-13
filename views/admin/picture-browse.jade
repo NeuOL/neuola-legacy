@@ -15,16 +15,14 @@
 
 table.table.table-hover
   thead
-    th 标题
-    th 作者
+    th.span5 标题
     th 日期
     th 标签
     th 动作
   tbody
     each pic in pics
       tr 
-        td= pic.title
-        td: a(href=pic.src)= pic.src
+        td: a(href=_(pic.src),title=_(pic.src))= pic.title
         td= pic.update
         td= pic.tag
         td.action

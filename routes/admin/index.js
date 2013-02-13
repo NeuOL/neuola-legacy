@@ -88,7 +88,11 @@ module.exports = {
 
     'verify/:id': {
       get: user.verify
-    }
+    },
+
+    'register': {
+      get: user.registerView
+    },
   },
 
   'messages': {

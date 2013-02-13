@@ -46,7 +46,7 @@ module.exports = {
     if (name && id && description) {
       var catalog = new model.Catalog({
         name: name,
-        _id: id,
+        id: id,
         description: description
       });
       catalog.save(function(err) {

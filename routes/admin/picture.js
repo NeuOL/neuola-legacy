@@ -23,7 +23,7 @@ module.exports = {
     var description = req.body.pic.description;
     var tags = req.body.pic.tag?req.body.pic.tag.split(/\s*,\s*/):[];
     if (src && title && description && tags) {
-      var pic = new model.model.Picture({
+      var pic = new model.Picture({
         src: src,
         title: title,
         description: description,
@@ -42,7 +42,7 @@ module.exports = {
 
   updateView: function updateView(req, res) {
     var id = req.params.pic;
-    model.model.Picture.findOne({
+    model.Picture.findOne({
       _id: id
     }, function(err, pic) {
       res.render('admin/picture-edit-page', {
@@ -59,7 +59,7 @@ module.exports = {
     var description = req.body.pic.description;
     var tags = req.body.pic.tag ? req.body.pic.tag.split(/\s*,\s*/) : [];
     if (oldId && src && title && description && tags) {
-      model.model.Picture.findOneAndUpdate({
+      model.Picture.findOneAndUpdate({
         _id: oldId
       }, {
         src: src,
@@ -81,7 +81,7 @@ module.exports = {
 
   remove: function remove(req, res) {
     var id = req.params.pic;
-    model.model.Picture.remove({
+    model.Picture.remove({
       _id: id
     }, function(err) {
       if (err) {
@@ -97,9 +97,9 @@ module.exports = {
     async.series({
       pics: function(callback) {
         if (! tags)
-          model.model.Picture.list(10, callback);
+          model.Picture.list(10, callback);
         else
-          model.model.Picture.find({tag:{$all:tags}}, callback);
+          model.Picture.find({tag:{$all:tags}}, callback);
       }
     }, function(err, results) {
       if (err) {

@@ -1,5 +1,5 @@
 .main-stage-inner
-  form(action='#{actionUrl}',method='POST').form-horizontal
+  form(action=_('#{actionUrl}'),method='POST').form-horizontal
     input(type='hidden',name='catalog[oldId]',value='#{catalog.id}')
 
     .control-group
