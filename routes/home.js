@@ -2,13 +2,8 @@
  * The homepage of the neuol site.
  */
 
-<<<<<<< Updated upstream:my/ctrls/home.js
-var SlidePic = require('../model/picture')
-  , common = require('../view/common');
-=======
 var model = require('../my/model')
   , common = require('../my/view/common');
->>>>>>> Stashed changes:routes/home.js
 
 exports.index = function index(req, res) {
   model.Picture.list(3, function(err, slides) {

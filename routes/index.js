@@ -1,19 +1,46 @@
 
-var home = require('../my/ctrls/home')
-  , article = require('../my/ctrls/article');
+var home = require('./home')
+  , article = require('./article')
+  , user =require('./user')
+  ;
 
 /**
  * URL patterns for main site.
  */
-module.exports = function(app) {
-  app.get('/', home.index);
-  app.get('/no-interest', home.noInterest);
+module.exports = {
+  all: home.index,
 
-  app.get('/about', home.about);
+  'catalog/:catalog': {
+    get: article.catalog
+  },
+  '@^/article/(.+)$': {
+    get: article.article
+  },
+  'articles': {
+    get: article.tag
+  },
 
-  app.get('/catalog/:catalog', article.catalog);
-  app.get(/^\/article\/(.+)$/, article.article);
-  app.get('/articles/', article.tag);
+  'about': {
+    all: home.about
+  },
 
-  require('./admin')(app);
+  'user': {
+    'register': {
+      get: user.registerView,
+      post: user.register
+    },
+    'login': {
+      get: user.loginView,
+      post: user.login
+    },
+    'logout': {
+      all: user.logout
+    },
+  },
+
+  '@^/admin/': {
+    all: user.checkLogin,
+  },
+  'admin': require('./admin/')
 };
+

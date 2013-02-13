@@ -3,7 +3,6 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
   , setting = require('./my/settings')
   , http = require('http')
   , path = require('path')
@@ -43,7 +42,31 @@ app.configure('development', function() {
   app.use(express.errorHandler());
 });
 
-routes(app);
+app.map = function map(routes, p) {
+  if (p == null) p = '';
+  for (r in routes) {
+    switch (typeof routes[r]) {
+      case 'object':
+        if (r[0] == '@' || r[0] == '/') {
+          app.map(routes[r], r);
+        } else {
+          app.map(routes[r], p + '/' + r);
+        }
+        break;
+      case 'function':
+        if (p[0] != '@') {
+          app[r](p?p:'/', routes[r]);
+        } else {
+          app[r](new RegExp(p.substring(1)), routes[r]);
+        }
+        break;
+      default:
+        console.error('Unknown route at %s...', r);
+    }
+  }
+};
+
+app.map(require('./routes'));
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));

@@ -2,15 +2,14 @@
  * The article controller for administration
  */
 
-var async = require('async'),
-  Post = require('../../../my/model/post'),
-  Catalog = require('../../../my/model/catalog');
+var async = require('async');
+var model = require('../../../my/model');
 var common = require('../../../my/view/common');
 
 exports.catalog = require('./catalog');
 
 function fetchAllCatalogsTask(callback) {
-  Catalog.list({}, callback);
+  model.Catalog.list({}, callback);
 }
 
 /*
@@ -47,7 +46,7 @@ exports.create = function create(req, res) {
     };
     console.log(doc);
 
-    var post = new Post(doc);
+    var post = new model.Post(doc);
     post.save(function(err) {
       if (err) {
         res.render('error', {
@@ -71,7 +70,7 @@ exports.create = function create(req, res) {
 exports.remove = function remove(req, res) {
   var catalog = req.params.catalog;
   var url = req.params.url;
-  Post.remove({
+  model.Post.remove({
     catalog: catalog,
     url: url
   }, function(err, post) {
@@ -93,7 +92,7 @@ exports.updateView = function updateView(req, res) {
   var author = req.session.user.name;
   async.parallel({
     post: function(callback) {
-      Post.getByUrl(url, callback);
+      model.Post.getByUrl(url, callback);
     },
     catalogs: fetchAllCatalogsTask
   }, function(err, results) {
@@ -133,7 +132,7 @@ exports.update = function update(req, res) {
     };
 
     // TODO check if the user have the right to edit the article.
-    Post.findOneAndUpdate({
+    model.Post.findOneAndUpdate({
       url: oldId,
       author: author
     }, doc, {}, function(err) {
@@ -166,12 +165,12 @@ exports.browse = function browse(req, res) {
   }
   async.parallel({
     posts: function(callback) {
-      Post.list(option, callback);
+      model.Post.list(option, callback);
     },
     catalogs: fetchAllCatalogsTask,
     catalog: function(callback) {
       if (catalog) {
-        Catalog.get(catalog, function(err, catalog) {
+        model.Catalog.get(catalog, function(err, catalog) {
           callback(err, catalog);
         });
       } else {

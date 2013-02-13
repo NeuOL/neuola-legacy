@@ -2,17 +2,9 @@
  * The Article module
  */
 
-var common = require('../view/common');
+var common = require('../my/view/common');
 var async = require('async');
-<<<<<<< Updated upstream:my/ctrls/article.js
-
-// models
-var Post = require('../model/post')
-  , Catalog = require('../model/catalog')
-  ;
-=======
 var model = require('../my/model');
->>>>>>> Stashed changes:routes/article.js
 
 exports.catalog = function catalog(req, res) {
   var catalog = req.params.catalog;
@@ -37,13 +29,8 @@ exports.catalog = function catalog(req, res) {
 };
 
 exports.article = function article(req, res) {
-<<<<<<< Updated upstream:my/ctrls/article.js
   var article = req.params[0];
-  Post.getByUrl(article, function(err, post) {
-=======
-  var article = req.params.article;
   model.Post.getByUrl(article, function(err, post) {
->>>>>>> Stashed changes:routes/article.js
     if (post) {
       res.render('article', {
         title: post.title,

@@ -3,13 +3,8 @@
  */
 
 var async = require('async')
-<<<<<<< Updated upstream:my/ctrls/admin/home.js
-var Message = require('../../model/message');
-var common = require('../../view/common');
-=======
 var common = require('../../my/view/common');
 var model = require('../../my/model');
->>>>>>> Stashed changes:routes/admin/home.js
 
 exports.index = function index(req, res) {
   async.parallel({
