@@ -65,15 +65,39 @@ exports.article = function article(req, res) {
 };
 
 exports.tag = function tag(req, res) {
+  var itemsPerPage = 10;
+  var pageNo = req.param('page');
+  if (!pageNo || pageNo <= 0) pageNo = 1;
   var tags = req.param('tag')?req.param('tag').split(/\s*,\s*/):[];
-  model.Post.list({tag:{$all:tags}}, function(err, posts) {
+  async.waterfall([
+    function (callback) {
+      model.Post.find({tag:{$all:tags}}).count(function (err, count) {
+        var pages = parseInt(count / itemsPerPage) + 1;
+        if (pageNo > pages) {
+          pageNo = pages;
+        }
+        callback(err, pageNo, pages);
+      });
+    },
+    function (pageNo, pages, callback) {
+      console.log(pageNo);
+      model.Post.find({tag: {$all:tags}})
+                .skip((pageNo-1)*itemsPerPage)
+                .exec(function (err, posts) {
+        callback(err, pageNo, pages, posts);
+      });
+    }
+  ], function (err, pageNo, pages, posts) {
     if (err) {
       common.error(res, err, '/');
     } else {
-      res.render('catalog', {
+      res.render('catalog-search', {
         title: tags.toString(),
-        description: '所有关于“' + tags.toString() + '”的文章',
-        posts: posts
+        description: '所有关于「' + tags.toString() + '」的文章',
+        tags: tags.toString(),
+        posts: posts,
+        pages: pages,
+        page: pageNo
       });
     }
   });
