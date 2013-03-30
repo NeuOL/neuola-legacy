@@ -93,7 +93,7 @@ exports.login = function login(req, res) {
       if (user && ! user.verified) {
         message = '用户尚未激活。';
       }
-      common.error(res, message, '/user/register');
+      common.error(res, message, '/user/login');
     } 
   });
 };

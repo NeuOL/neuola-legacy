@@ -44,9 +44,13 @@ module.exports = {
     post: feedback.submit
   },
 
-  'admin/*': {
+  'admin(*)': {
     all: user.checkLogin,
   },
-  'admin': require('./admin/')
+  'admin': require('./admin/'),
+
+  'setup': {
+    all: require('./setup')
+  }
 };
 

@@ -17,11 +17,17 @@ exports.catalog = function catalog(req, res) {
     }
   }, function (err, results) {
       if (!err) {
-        res.render('catalog', {
-          title: results.catalog.name,
-          description: results.catalog.description,
-          posts: results.posts
-        });
+        if (! req.xhr) {
+          res.render('catalog', {
+            title: results.catalog.name,
+            description: results.catalog.description,
+            posts: results.posts
+          });
+        } else {
+          res.render('catalog-ajax', {
+            posts: results.posts
+          });
+        }
       } else {
         common.error(res, err, '/');
       }

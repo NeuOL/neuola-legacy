@@ -9,20 +9,20 @@ block content
           block navbar
             li
               a(href=_("/")) 主页
-            li 
-              a(href=_("/catalog/explore")) 精选
             li
-              a(href=_("/catalog/news")) 活动
+              a(href=_("/catalog/explore")).catalog 精选
+            li
+              a(href=_("/catalog/news")).catalog 活动
             li
               a(href=_("/about")) 关于
             
-          if session.user 
-            a(href=_('/user/logout')).btn.pull-right 退出
+        if session.user 
+          a(href=_('/user/logout')).btn.pull-right 退出
 
   .main-stage.container
     block main-stage
 
   footer#footer.container
-    p.pull-right: a(href='http://github.com/yfwz100/neuola') 项目主页
+    p.pull-right: a(href='http://gitorious.org/neuola/node-site') 项目主页
     p Neuola &copy; 东大在线
 

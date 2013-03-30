@@ -6,7 +6,8 @@ var model = require('../my/model')
   , common = require('../my/view/common');
 
 exports.index = function index(req, res) {
-  model.Picture.list(3, function(err, slides) {
+  model.Picture.find({'tag':{ $in: ['home']}}).limit(3)
+  .exec(function(err, slides) {
     if (err) {
       common.error(res, err, '/');
     } else {
