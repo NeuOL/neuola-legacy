@@ -44,6 +44,14 @@ block main-stage
       else
         .alert.alert-info.no-result No articles yet.
 
+      .pagination.pagination-centered
+        ul
+          li: a(href='?page='+(page-1)): &laquo;
+          - for(var i=1; i<=pages; i++)
+            li: a(href='?page='+i)= i
+          li: a(href='?page='+(page+1)): &raquo;
+
+
     .sidebar
       .sidebar-box.search-box
         .title 搜索

@@ -8,24 +8,40 @@ var model = require('../my/model');
 
 exports.catalog = function catalog(req, res) {
   var catalog = req.params.catalog;
-  async.parallel({
-    posts: function(callback) {
-      model.Post.list({'catalog.id': catalog}, callback);
-    }, 
-    catalog: function(callback) {
+  var itemsPerPage = 10;
+  var pageNo = req.param('page');
+  if (! pageNo || pageNo <= 0) pageNo = 1;
+  async.waterfall([
+    function(callback) {
       model.Catalog.get(catalog, callback);
-    }
-  }, function (err, results) {
+    },
+    function(c, callback) {
+      model.Post.find({'catalog': c._id}).count(function (err, count) {
+        callback(err, c, count);
+      });
+    },
+    function(c, count, callback) {
+      var pages = parseInt(count / itemsPerPage)+1;
+      if (pageNo > pages) {
+        pageNo = pages
+      }
+      model.Post.find({'catalog': c._id}).skip((pageNo-1)*itemsPerPage).limit(itemsPerPage).exec(function (err, posts) {
+        callback(err, c, pages, posts);
+      });
+    } 
+  ], function (err, c, pages, posts) {
       if (!err) {
         if (! req.xhr) {
           res.render('catalog', {
-            title: results.catalog.name,
-            description: results.catalog.description,
-            posts: results.posts
+            title: c.name,
+            description: c.description,
+            posts: posts,
+            pages: pages,
+            page: pageNo
           });
         } else {
           res.render('catalog-ajax', {
-            posts: results.posts
+            posts: posts
           });
         }
       } else {
