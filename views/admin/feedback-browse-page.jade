@@ -57,7 +57,7 @@ block admin-stage
   .pagination.pagination-centered
     ul
       li: a(href='?page='+(page-1)): &laquo;
-      - for(var i=1; i<pages; i++)
+      - for(var i=1; i<=pages; i++)
         li: a(href='?page='+i)= i
       li: a(href='?page='+(page+1)): &raquo;
 
