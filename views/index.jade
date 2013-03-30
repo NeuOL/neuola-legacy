@@ -5,18 +5,36 @@ block append head
   script(src=_('/javascripts/slides.jquery.js'));
   script
     $(function() {
-      $('#slides').slides({play:5000});
+      var $logo = $('.logo');
+      var $cover = $("#cover");
+
+      $('#slides').slides({
+        width: $logo.width(),
+        height: $logo.height()
+      });
+
+      $('<div id="overlay"></div>').css({
+        position: 'absolute',
+        left: $cover.css('left'),
+        top: $cover.css('top'),
+        backgroundColor: 'white',
+        opacity: '0.4',
+        width: '50%',
+        height: $cover.height() + 'px',
+        zIndex: 9,
+        borderRadius: '0 10px 10px 0'
+      }).appendTo($('.logo'));
     });
 
 block main-stage
-  .logo.hero-unit
-    h1 不仅是一个假设
-    p 这个世界，不是缺少美，而是缺少发现美的眼睛。
-    form(action=_('/articles/'), method='GET')
-      .input-append
-        input(type='text',name='tag',placeholder='发现有趣的东西~').span3
-        button(type='submit').btn.btn-primary 搜索
-        a(type='button',href=_('/no-interest')).btn 反馈
+  .logo
+    #cover
+      h1 东大在线
+      form(action=_('/articles/'), method='GET')
+        .input-append
+          input(type='text',name='tag',placeholder='发现有趣的东西~').span3
+          button(type='submit').btn.btn-primary 搜索
+          a(type='button',href=_('/feedback')).btn 反馈
 
     #slides
       .slides_container
@@ -24,5 +42,7 @@ block main-stage
           .slide
             img(src=_(img.src),title='#{img.title}')
             .description
-              p #{img.description}
+              .description-container
+                .title #{img.title}
+                p #{img.description}
 

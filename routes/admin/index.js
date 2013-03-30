@@ -4,6 +4,7 @@ var user = require('../user')
   , picture = require('./picture')
   , message = require('./message')
   , article = require('./article')
+  , feedback = require('./feedback')
   ;
 
 /**
@@ -118,5 +119,10 @@ module.exports = {
     'del/:id': {
       get: message.remove
     }
+  },
+
+  'feedbacks': {
+    get: feedback.browse,
+    post: feedback.del
   }
 };

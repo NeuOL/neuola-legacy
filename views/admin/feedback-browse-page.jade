@@ -1,0 +1,63 @@
+extends layout
+
+append head 
+  style
+    .feedback {
+      background-color: #efefef;
+      box-shadow: inset 0 0 5px #ccc;
+      margin-bottom: 1em;
+      border-radius: 0.5em;
+      overflow: hidden;
+    }
+
+    .meta:after {
+      display: block;
+      content: "";
+      clear:both;
+    }
+
+    .meta .email {
+      float: left;
+      max-width: 40%;
+
+      background-color: #0cf;
+      border-radius: 0.5em 0 0.5em 0;
+    }
+
+    .meta .date {
+      float: right;
+      width: 60%;
+      text-align: right;
+    }
+
+    .meta .inner {
+      padding: 0.5em;
+      display: block;
+    }
+
+    .comment {
+      margin: 1em;
+    }
+
+append breadcrumb
+  li 
+    span.divider /
+    a(href=_('/admin/messages/')) 查看反馈
+
+block admin-stage
+  each feedback in feedbacks
+    .feedback
+      .meta 
+        .email
+          .inner 来自：#{feedback.email}
+        .date
+          .inner= feedback.date
+      .comment= feedback.comment
+
+  .pagination.pagination-centered
+    ul
+      li: a(href='?page='+(page-1)): &laquo;
+      - for(var i=1; i<pages; i++)
+        li: a(href='?page='+i)= i
+      li: a(href='?page='+(page+1)): &raquo;
+

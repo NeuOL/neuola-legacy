@@ -5,4 +5,5 @@ module.exports = {
   User: require('./user'),
   Picture: require('./picture'),
   Message: require('./message'),
+  Feedback: require('./feedback')
 };

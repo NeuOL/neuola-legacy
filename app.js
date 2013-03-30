@@ -54,11 +54,7 @@ app.map = function map(routes, p) {
         }
         break;
       case 'function':
-        if (p[0] != '@') {
-          app[r](p?p:'/', routes[r]);
-        } else {
-          app[r](new RegExp(p.substring(1)), routes[r]);
-        }
+        app[r](p?p:'/', routes[r]);
         break;
       default:
         console.error('Unknown route at %s...', r);

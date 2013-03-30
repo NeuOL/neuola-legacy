@@ -12,12 +12,19 @@ block append head
 block admin-stage
   .page-content.row-fluid
     .span3
-        a(href=_('/admin/articles/')).btn.btn-block.btn-large 管理文章
-        a(href=_('/admin/pictures/')).btn.btn-block.btn-large 图片库
-        a(href=_('/admin/users/')).btn.btn-block.btn-large 用户管理
-        a(href=_('/admin/messages/')).btn.btn-block.btn-large
-          | 消息 
-          span.badge.badge-info= numOfUnread?numOfUnread:0
+      ul.nav.nav-list.well.well-small
+        li.nav-header 常规管理
+        li: a(href=_('/admin/articles/')) 管理文章
+        li: a(href=_('/admin/pictures/')) 图片库
+        li.nav-header 管理员
+        if user.role == 0
+          li: a(href=_('/admin/users/')) 用户管理
+          li: a(href=_('/admin/feedbacks')) 反馈
+        li.nav-header 消息
+        li
+          a(href=_('/admin/messages/'))
+            | 消息 
+            span.badge.badge-info= numOfUnread?numOfUnread:0
 
     .span9
       p#date

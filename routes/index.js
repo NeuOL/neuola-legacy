@@ -1,7 +1,8 @@
 
 var home = require('./home')
   , article = require('./article')
-  , user =require('./user')
+  , user = require('./user')
+  , feedback = require('./feedback')
   ;
 
 /**
@@ -13,7 +14,7 @@ module.exports = {
   'catalog/:catalog': {
     get: article.catalog
   },
-  '@^/article/(.+)$': {
+  'article/*': {
     get: article.article
   },
   'articles': {
@@ -38,7 +39,12 @@ module.exports = {
     },
   },
 
-  '@^/admin/': {
+  'feedback': {
+    get: feedback.view,
+    post: feedback.submit
+  },
+
+  'admin/*': {
     all: user.checkLogin,
   },
   'admin': require('./admin/')

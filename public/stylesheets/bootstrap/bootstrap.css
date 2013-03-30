@@ -3697,6 +3697,9 @@ input[type="submit"].btn.btn-mini {
 .navbar .nav > li {
   float: left;
 }
+.navbar .nav > li.pull-right {
+  float: right;
+}
 .navbar .nav > li > a {
   float: none;
   padding: 10px 15px 10px;

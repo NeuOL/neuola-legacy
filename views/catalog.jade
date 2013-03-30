@@ -23,7 +23,7 @@ block main-stage
           each t in post.tag
             span.tag: a(href=_('/articles/?tag='+t))= '#'+t
       .action
-        a(href=_('/comment/'+post.url)).btn.btn-mini 回复
+        // a(href=_('/comment/'+post.url)).btn.btn-mini 回复
       .clearfix
 
     .articles
@@ -42,13 +42,14 @@ block main-stage
 
         - ppost = post
       else
-        .alert.alert-info No more result.
+        .alert.alert-info.no-result No articles yet.
+
     .sidebar
-      .sidebar-box
-        .title Calendar
+      .sidebar-box.search-box
+        .title 搜索
         .content
-          table.table.table-bordered
-            tr
-              td 1
-              td 2
+          form(action=_('/articles/'), method='GET')
+            .input-append
+              input(type='text',name='tag',placeholder='发现有趣的东西~').span2
+              button(type='submit').btn.btn-primary 搜索
 

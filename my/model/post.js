@@ -19,6 +19,10 @@ var postSchema = new mongoose.Schema({
     type: Date,
     'default': Date.now,
   },
+  renderModel: {
+    type: String,
+    'default': 'post'
+  },
   catalog: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Catalog'

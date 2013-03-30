@@ -1,29 +1,28 @@
 extends layout
 
-block append head
-  link(rel="stylesheet", href=_("/stylesheets/site.css"))
-
 block content
   .nav.navbar.navbar-static-top
     .navbar-inner
       .container
+        span.brand 东大在线
         ul.nav
           block navbar
             li
               a(href=_("/")) 主页
             li 
-              a(href=_("/catalog/news")) 新鲜事
+              a(href=_("/catalog/explore")) 精选
             li
-              a(href=_("/catalog/test")) 测试的世界
-            li
-              a(href=_("/catalog/explore")) 探索
+              a(href=_("/catalog/news")) 活动
             li
               a(href=_("/about")) 关于
+            
+          if session.user 
+            a(href=_('/user/logout')).btn.pull-right 退出
 
   .main-stage.container
     block main-stage
 
   footer#footer.container
-    p.pull-right: a(href=_('/projects')) Projects
-    p Neuola &copy; yfwz100
+    p.pull-right: a(href='http://github.com/yfwz100/neuola') 项目主页
+    p Neuola &copy; 东大在线
 

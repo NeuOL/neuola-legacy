@@ -4,6 +4,10 @@ var mongoose = require('mongoose');
 var userSchema = new mongoose.Schema({
   name: String,
   password: String,
+  role: {
+    type: Number,
+    "default": 1
+  },
   pic: String,
   description: String,
   verified: Boolean
