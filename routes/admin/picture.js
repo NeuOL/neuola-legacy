@@ -17,7 +17,7 @@ module.exports = {
   create: function create(req, res) {
     var src = req.files.pic.file.path;
     if (src) {
-      src = '/uploads' + src.substr(src.lastIndexOf('/'));
+      src = '/uploads/' + src.substr(src.lastIndexOf(require('path').sep)+1);
     }
     var title = req.body.pic.title;
     var description = req.body.pic.description;
