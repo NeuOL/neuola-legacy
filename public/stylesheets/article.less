@@ -1,10 +1,48 @@
 
+@dateboxbg: #049cdb;
 
 .article {
+
+  position: relative;
+
+  .date-box {
+    position: absolute;
+    left: 1em;
+    top: 1em;
+    z-index: 100;
+
+    width: 64px;
+    margin: 8px 18px 8px 8px;
+    border: 2px solid @dateboxbg;
+    border-radius: 5px;
+    text-align: center;
+    overflow: hidden;
+
+    .date {
+      background-color: @dateboxbg;
+      font-size: 30px;
+      color: #f3f3f3;
+      line-height: 50px;
+    }
+
+    .year-month {
+      background-color: white;
+    }
+
+    .year {
+      float: left;
+    }
+
+    .month {
+      float: right;
+    }
+  }
+
   h1.title {
     margin-bottom: 0.5em;
     padding-bottom: 0.2em;
     border-bottom: 1px solid #ccc;
+    text-align: center;
   }
 
   .info {

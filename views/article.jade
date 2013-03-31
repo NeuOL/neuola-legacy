@@ -5,13 +5,14 @@ block append head
 
 block main-stage
   .main-stage-inner.article
-    if post
+    if typeof post != 'undefined'
+      .date-box
+        .date= post.date.getDate()
+        .year-month= post.date.getFullYear()+' / '+(post.date.getMonth()+1)
       h1.title= post.title
       .info
         | by 
         span.author=  post.author.name
-        | @ 
-        span.date= post.date
       .text
         !{post.html}
     else
