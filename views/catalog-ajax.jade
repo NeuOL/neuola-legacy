@@ -1,5 +1,5 @@
 if posts.length > 0
-  .date #{posts[0].date.getMonth()}月#{posts[0].date.getDate()}日
+  .date #{posts[0].date.getMonth()+1}月#{posts[0].date.getDate()}日
   .text 「文章」 
     a(href=_('/article/'+posts[0].url)) #{posts[0].title}
 else
