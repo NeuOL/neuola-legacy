@@ -2,15 +2,21 @@ extends site
 
 block append head
   link(rel='stylesheet', href=_('/stylesheets/index.css'))
-  script(src=_('/javascripts/slides.jquery.js'));
+  script(src=_('/javascripts/jquery.slides.js'));
   script
     $(function() {
       var $logo = $('.logo');
       var $cover = $("#cover");
 
-      $('#slides').slides({
-        width: $logo.width(),
-        height: $logo.height()
+      $('#slides').slidesjs({
+        width: $logo.outerWidth(),
+        height: $logo.outerHeight(),
+        navigation: {
+          active: false,
+        },
+        pagination: {
+          effect: 'fade'
+        }
       });
 
       $('<div></div>').css({
@@ -73,12 +79,11 @@ block main-stage
           a(type='button',href=_('/feedback')).btn 反馈
 
     #slides
-      .slides_container
-        each img in headPics
-          .slide
-            img(src=_(img.src),title='#{img.title}')
-            .description
-              .description-container
-                .title #{img.title}
-                p #{img.description}
+      each img in headPics
+        .slide
+          img(src=_(img.src),title='#{img.title}')
+          .description
+            .description-container
+              .title #{img.title}
+              p #{img.description}
 
