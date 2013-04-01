@@ -8,46 +8,33 @@ var model = require('../my/model');
 
 exports.catalog = function catalog(req, res) {
   var catalog = req.params.catalog;
-  var itemsPerPage = 10;
-  var pageNo = req.param('page');
-  if (! pageNo || pageNo <= 0) pageNo = 1;
-  async.waterfall([
-    function(callback) {
-      model.Catalog.get(catalog, callback);
-    },
-    function(c, callback) {
-      model.Post.find({'catalog': c._id}).count(function (err, count) {
-        callback(err, c, count);
+  if (req.xhr) {
+    model.Catalog.listLatest({
+      catalog: catalog
+    }, function (err, c, posts) {
+      res.render('catalog-ajax', {
+        posts: posts
       });
-    },
-    function(c, count, callback) {
-      var pages = parseInt(count / itemsPerPage)+1;
-      if (pageNo > pages) {
-        pageNo = pages
-      }
-      model.Post.find({'catalog': c._id}).skip((pageNo-1)*itemsPerPage).limit(itemsPerPage).exec(function (err, posts) {
-        callback(err, c, pages, posts);
-      });
-    } 
-  ], function (err, c, pages, posts) {
-      if (!err) {
-        if (! req.xhr) {
+    });
+  } else {
+    model.Catalog.listPosts({
+      pageNo: req.param('page'),
+      itemsPerPage: 10,
+      catalog: catalog
+    }, function (err, pageNo, allPagesNo, c, posts) {
+        if (!err) {
           res.render('catalog', {
             title: c.name,
             description: c.description,
             posts: posts,
-            pages: pages,
+            pages: allPagesNo,
             page: pageNo
           });
         } else {
-          res.render('catalog-ajax', {
-            posts: posts
-          });
+          common.error(res, err, '/');
         }
-      } else {
-        common.error(res, err, '/');
-      }
-  });
+    });
+  }
 };
 
 exports.article = function article(req, res) {
@@ -65,29 +52,11 @@ exports.article = function article(req, res) {
 };
 
 exports.tag = function tag(req, res) {
-  var itemsPerPage = 10;
-  var pageNo = req.param('page');
-  if (!pageNo || pageNo <= 0) pageNo = 1;
   var tags = req.param('tag')?req.param('tag').split(/\s*,\s*/):[];
-  async.waterfall([
-    function (callback) {
-      model.Post.find({tag:{$all:tags}}).count(function (err, count) {
-        var pages = parseInt(count / itemsPerPage) + 1;
-        if (pageNo > pages) {
-          pageNo = pages;
-        }
-        callback(err, pageNo, pages);
-      });
-    },
-    function (pageNo, pages, callback) {
-      console.log(pageNo);
-      model.Post.find({tag: {$all:tags}})
-                .skip((pageNo-1)*itemsPerPage)
-                .exec(function (err, posts) {
-        callback(err, pageNo, pages, posts);
-      });
-    }
-  ], function (err, pageNo, pages, posts) {
+  model.Post.listByTag(tags, {
+    pageNo: req.param('page'),
+    itemsPerPage: 10
+  }, function (err, pageNo, pages, posts) {
     if (err) {
       common.error(res, err, '/');
     } else {

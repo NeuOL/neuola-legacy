@@ -9,12 +9,24 @@ block main-stage
       .date-box
         .date= post.date.getDate()
         .year-month= post.date.getFullYear()+' / '+(post.date.getMonth()+1)
-      h1.title= post.title
+      .title= post.title
       .info
         | by 
         span.author=  post.author.name
       .text
         !{post.html}
+      .action
+        .jiathis_style
+          a(data='width=100').jiathis_like_tsina
+          a(data='width=100').jiathis_like_qzone
+          a(data='width=100').jiathis_like_renren
+          .clearfix
+        script(type='text/javascript')
+          var jiathis_config = { data_track_clickback:'true'};
+        script(type='text/javascript',src='http://v3.jiathis.com/code_mini/jia.js?uid=1351757216554483',charset='utf-8',async='true')
+
+
     else
       p No content?
+
 

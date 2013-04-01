@@ -1,5 +1,7 @@
 
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
+  , async = require('async')
+  ;
 
 var postSchema = new mongoose.Schema({
   title: {
@@ -31,9 +33,16 @@ var postSchema = new mongoose.Schema({
   url: {
     type: String,
     required: true
+  },
+  vote: {
+    type: Number,
+    'default': 0
   }
 });
 
+/**
+ * List the posts by specify options.
+ */
 postSchema.statics.list = function list(options, callback) {
   var self = this;
   require('./catalog').findOne({
@@ -51,12 +60,54 @@ postSchema.statics.list = function list(options, callback) {
   });
 };
 
+/**
+ * Get a particular post by its URL.
+ *
+ * @param url the URL.
+ * @param callback (err, post)
+ */
 postSchema.statics.getByUrl = function getByUrl(url, callback) {
   this.findOne({
     url: url
   }).populate('author').populate('catalog').exec(callback);
 };
 
+/**
+ * List posts by tag.
+ *
+ * @param tags array of string
+ * @param callback (err, pageNo, pages, posts)
+ */
+postSchema.statics.listByTag = function (tags, options, callback) {
+  var model = require('./index')
+    , pageNo = options.pageNo
+    , itemsPerPage = options.itemsPerPage
+    ;
+  if (!pageNo || pageNo <= 0) pageNo = 1;
+  async.waterfall([
+    function (callback) {
+      model.Post.find({tag:{$all:tags}}).count(function (err, count) {
+        var pages = parseInt(count / itemsPerPage) + 1;
+        if (pageNo > pages) {
+          pageNo = pages;
+        }
+        callback(err, pageNo, pages);
+      });
+    },
+    function (pageNo, pages, callback) {
+      console.log(pageNo);
+      model.Post.find({tag: {$all:tags}})
+                .skip((pageNo-1)*itemsPerPage)
+                .exec(function (err, posts) {
+        callback(err, pageNo, pages, posts);
+      });
+    }
+  ], callback);
+};
+
+/**
+ * A virtual method to get the HTML-coded content of post body.
+ */
 postSchema.virtual('html').get(function () {
   return require('marked')(this.body);
 });
