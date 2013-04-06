@@ -34,9 +34,15 @@ var postSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  vote: {
-    type: Number,
-    'default': 0
+  source: {
+    name: {
+      type: String,
+      trim: true
+    },
+    link: {
+      type: String,
+      trim: true
+    }
   }
 });
 

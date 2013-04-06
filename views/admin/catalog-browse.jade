@@ -1,5 +1,5 @@
 .action-bar
-  a(href=_('/admin/articles/catalog/new')).btn.btn-success 新建分类
+  a(href='admin/articles/catalog/new').btn.btn-success 新建分类
   .clearfix
 
 table.table
@@ -17,10 +17,10 @@ table.table
         td= catalog.id
         td= catalog.description
         td
-          a(href=_('/admin/articles/catalog/edit/')+catalog.id).btn.btn-mini.
+          a(href='admin/articles/catalog/edit/'+catalog.id).btn.btn-mini.
             编辑 
           | 
-          a(href=_('/admin/articles/catalog/del/')).btn.btn-mini.
+          a(href='admin/articles/catalog/del/').btn.btn-mini.
             删除
     else
       tr.no-result

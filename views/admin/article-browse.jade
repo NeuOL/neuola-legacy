@@ -1,5 +1,5 @@
 .action-bar
-  form(action=_('/admin/articles/catalog/'),method='POST').form-inline
+  form(action='admin/articles/catalog/',method='POST').form-inline
     input(type='hidden',name='action',value='changeCatalog')
     label(for='catalog-list') 分类：
     .input-append
@@ -12,8 +12,8 @@
 
       button(type='submit').btn 转到
     | &nbsp;
-    a(href=_('/admin/articles/catalog/')).btn 分类管理
-  a(href=_('/admin/article/new')).btn.btn-success 新建文章
+    a(href='admin/articles/catalog/').btn 分类管理
+  a(href='admin/article/new').btn.btn-success 新建文章
   .clearfix
 
 table.table.table-hover
@@ -29,8 +29,6 @@ table.table.table-hover
         td= post.author.name
         td= post.date
         td.action
-          a(href=_('/admin/article/edit/'+post.url)).btn.btn-mini
-            | 编辑
+          a(href='admin/article/edit/'+post.url).btn.btn-mini 编辑
           | 
-          a(href=_('/admin/article/del/'+post.url)).btn.btn-mini
-            | 删除
+          a(href='admin/article/del/'+post.url).btn.btn-mini 删除

@@ -1,7 +1,7 @@
 extends site
 
 block append head
-  link(rel='stylesheet', href=_('/stylesheets/article.css'))
+  link(rel='stylesheet', href='stylesheets/article.css')
 
 block main-stage
   .main-stage-inner.article
@@ -11,8 +11,12 @@ block main-stage
         .year-month= post.date.getFullYear()+' / '+(post.date.getMonth()+1)
       .title= post.title
       .info
-        | by 
-        span.author=  post.author.name
+        if post.source.name
+          | 来源：
+          a(href=post.source.link,title='文章出处')= post.source.name
+        else
+          | by 
+          span.author= post.author.name
       .text
         !{post.html}
       .action

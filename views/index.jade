@@ -1,8 +1,8 @@
 extends site
 
 block append head
-  link(rel='stylesheet', href=_('/stylesheets/index.css'))
-  script(src=_('/javascripts/jquery.slides.js'));
+  link(rel='stylesheet', href='stylesheets/index.css'))
+  script(src='javascripts/jquery.slides.js'));
   script
     $(function() {
       var $logo = $('.logo');
@@ -72,16 +72,16 @@ block main-stage
   .logo
     #cover.overlay
       h1 「发现」
-      form(action=_('/articles/'), method='GET')
+      form(action='articles/', method='GET')
         .input-append
           input(type='text',name='tag',placeholder='发现有趣的东西~').span3
           button(type='submit').btn.btn-primary 搜索
-          a(type='button',href=_('/feedback')).btn 反馈
+          a(type='button',href='feedback').btn 反馈
 
     #slides
       each img in headPics
         .slide
-          img(src=_(img.src),title='#{img.title}')
+          img(src=img.src,title='#{img.title}')
           .description
             .description-container
               .title #{img.title}

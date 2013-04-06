@@ -31,7 +31,7 @@ exports.catalog = function catalog(req, res) {
             page: pageNo
           });
         } else {
-          common.error(res, err, '/');
+          common.error(res, err, '');
         }
     });
   }
@@ -46,7 +46,7 @@ exports.article = function article(req, res) {
         post: post
       });
     } else {
-      common.error(res, '没有这篇文章吧？', '/');
+      common.error(res, '没有这篇文章吧？', '');
     }
   });
 };
@@ -58,7 +58,7 @@ exports.tag = function tag(req, res) {
     itemsPerPage: 10
   }, function (err, pageNo, pages, posts) {
     if (err) {
-      common.error(res, err, '/');
+      common.error(res, err, '');
     } else {
       res.render('catalog-search', {
         title: tags.toString(),

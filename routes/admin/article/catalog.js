@@ -13,10 +13,20 @@ module.exports = {
     switch (action) {
     case 'changeCatalog':
       var catalog = req.body.catalog
-      res.redirect('/admin/articles/catalog/view/' + catalog);
+      // res.redirect('admin/articles/catalog/view/' + catalog);
+      res.render('done', {
+        message: '正在跳转……',
+        link: 'admin/articles/catalog',
+        refresh: 0
+      });
       break;
     default:
-      res.redirect('/admin/articles/');
+      res.render('done', {
+        message: '正在跳转……',
+        link: 'admin/articles/',
+        refresh: 0
+      });
+      // res.redirect('admin/articles/');
     }
   },
 
@@ -34,7 +44,7 @@ module.exports = {
   createView: function catalogCreateView(req, res) {
     res.render('admin/catalog-edit-page', {
       title: '创建新分类',
-      actionUrl: '/admin/articles/catalog/new/',
+      actionUrl: 'admin/articles/catalog/new/',
       catalog: {}
     });
   },
@@ -53,19 +63,19 @@ module.exports = {
         if (err) {
           res.render('error', {
             message: '数据库链接错误。',
-            link: '/admin/articles/catalog/'
+            link: 'admin/articles/catalog/'
           });
         } else {
           res.render('done', {
             message: '保存修改。',
-            link: '/admin/articles/catalog/'
+            link: 'admin/articles/catalog/'
           });
         }
       });
     } else {
       res.render('error', {
         message: '错误的参数。',
-        link: '/admin/articles/catalog/'
+        link: 'admin/articles/catalog/'
       });
     }
   },
@@ -81,12 +91,12 @@ module.exports = {
         res.render('admin/catalog-edit-page', {
           title: '正在编辑' + results.catalog.name,
           catalog: results.catalog,
-          actionUrl: '/admin/articles/catalog/edit/'
+          actionUrl: 'admin/articles/catalog/edit/'
         });
       } else {
         res.render('error', {
           message: '数据库连接错误！',
-          link: '/admin/articles/catalog/'
+          link: 'admin/articles/catalog/'
         });
       }
     });
@@ -108,19 +118,19 @@ module.exports = {
         if (err) {
           res.render('error', {
             message: err,
-            link: '/admin/articles/catalog/'
+            link: 'admin/articles/catalog/'
           });
         } else {
           res.render('done', {
             message: '保存修改。',
-            link: '/admin/articles/catalog/'
+            link: 'admin/articles/catalog/'
           });
         }
       });
     } else {
       res.render('error', {
         message: '错误的参数。',
-        link: '/admin/articles/catalog/'
+        link: 'admin/articles/catalog/'
       });
     }
   },
@@ -133,12 +143,12 @@ module.exports = {
       if (err) {
         res.render('error', {
           message: '错误的参数。',
-          link: '/admin/articles/catalog/'
+          link: 'admin/articles/catalog/'
         });
       } else {
         res.render('done', {
           message: '成功删除。',
-          link: '/admin/articles/catalog/'
+          link: 'admin/articles/catalog/'
         });
       }
     });

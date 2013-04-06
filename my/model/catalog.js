@@ -65,7 +65,11 @@ catalogSchema.statics.listLatest = function (options, callback) {
     function(c, callback) {
       model.Post.findOne({catalog:c._id}).sort({date:'desc'}).exec(function (err, post) {
         if (! err && post) {
-          model.Post.find({catalog: c._id, date: post.date}).sort({date:'desc'}).exec(function (err, posts) {
+          var d = post.date;
+          d.setHours(0);
+          d.setMinutes(0);
+          d.setSeconds(0);
+          model.Post.find({catalog: c._id, date: {$gt:d}}).sort({date:'desc'}).exec(function (err, posts) {
             callback(err, c, posts);
           });
         } else {

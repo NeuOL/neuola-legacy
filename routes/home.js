@@ -9,7 +9,7 @@ exports.index = function index(req, res) {
   model.Picture.find({'tag':{ $in: ['home']}}).limit(3)
   .exec(function(err, slides) {
     if (err) {
-      common.error(res, err, '/');
+      common.error(res, err, '');
     } else {
       res.render('index', {
         title: 'Neuola',
@@ -27,6 +27,6 @@ exports.about = function about(req, res) {
 
 exports.noInterest = function noInterest(req, res) {
   res.render('no-interest', {
-    title: '没兴趣？'
+    title: '我们聆听您的留言'
   });
 }

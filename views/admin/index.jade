@@ -14,15 +14,15 @@ block admin-stage
     .span3
       ul.nav.nav-list.well.well-small
         li.nav-header 常规管理
-        li: a(href=_('/admin/articles/')) 管理文章
-        li: a(href=_('/admin/pictures/')) 图片库
+        li: a(href='admin/articles/') 管理文章
+        li: a(href='admin/pictures/') 图片库
         li.nav-header 管理员
         if user.role == 0
-          li: a(href=_('/admin/users/')) 用户管理
-          li: a(href=_('/admin/feedbacks')) 反馈
+          li: a(href='admin/users/') 用户管理
+          li: a(href='/admin/feedbacks') 反馈
         li.nav-header 消息
         li
-          a(href=_('/admin/messages/'))
+          a(href='/admin/messages/')
             | 消息 
             span.badge.badge-info= numOfUnread?numOfUnread:0
 
@@ -31,7 +31,7 @@ block admin-stage
       table.table.table-bordered.user-box
         tr
           td(rowspan='2').user-pic
-            img(src=_(user.pic))
+            img(src=user.pic)
           td= user.name
         tr
           td= user.loginDate

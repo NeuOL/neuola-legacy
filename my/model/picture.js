@@ -15,5 +15,5 @@ slideSchema.statics.list = function list(num, callback) {
   });
 };
 
-module.exports = mongoose.model('Slides', slideSchema);
+module.exports = mongoose.model('Slide', slideSchema);
 

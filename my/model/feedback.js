@@ -22,10 +22,16 @@ var feedbackSchema = new mongoose.Schema({
   read: {
     type: Boolean,
     'default': false
+  },
+  related: {
+    type: String,
+    'default': ''
   }
 });
 
-// Translate the markdown syntax to html syntax.
+/**
+ * Translate the markdown syntax to html syntax.
+ */
 feedbackSchema.virtual('html').get(function () {
   return require('marked')(this.comment);
 });

@@ -3,14 +3,14 @@ extends message-layout
 block append breadcrumb
   li
     span.divider /
-    a(href=_('/admin/messages/new/')): i.icon-plus
+    a(href='admin/messages/new/'): i.icon-plus
 
 block admin-stage
   ul.nav.nav-tabs
-    li.active: a(href=_('/admin/messages/')) 所有消息
-    li: a(href=_('/admin/messages/recv/')) 收到的消息
-    li: a(href=_('/admin/messages/sent/')) 发送的消息
-    li.pull-right: a(href=_('/admin/messages/new/'))
+    li.active: a(href='admin/messages/') 所有消息
+    li: a(href='admin/messages/recv/') 收到的消息
+    li: a(href='admin/messages/sent/') 发送的消息
+    li.pull-right: a(href='admin/messages/new/')
       i.icon-plus 
       |  发送消息
   include message-browse

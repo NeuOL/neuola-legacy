@@ -1,10 +1,10 @@
 .main-stage-inner
   form(
-    action=_('#{actionUrl}')
+    action=actionUrl
     method='POST'
     enctype='multipart/form-data'
   ).form-horizontal
-    input(type='hidden',name='pic[oldId]',value='#{pic.id}')
+    input(type='hidden',name='pic[oldId]',value=pic.id)
 
     .control-group
       label(for='title').control-label 标题

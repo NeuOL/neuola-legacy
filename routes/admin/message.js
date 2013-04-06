@@ -11,7 +11,7 @@ module.exports = {
     var user = req.session.user;
     model.Message.latest(user.name, 10, function(err, messages) {
       if (err) {
-        error(res, err, '/admin/messages/');
+        error(res, err, 'admin/messages/');
       } else {
         res.render('admin/message-browse-page', {
           user: user,
@@ -25,7 +25,7 @@ module.exports = {
     var user = req.session.user;
     model.Message.sent(user.name, 10, function(err, messages) {
       if (err) {
-        error(res, err, '/admin/messages/');
+        error(res, err, 'admin/messages/');
       } else {
         res.render('admin/message-browse-sent-page', {
           user: user,
@@ -39,7 +39,7 @@ module.exports = {
     var user = req.session.user;
     model.Message.recv(user.name, 10, function(err, messages) {
       if (err) {
-        error(res, err, '/admin/messages/');
+        error(res, err, 'admin/messages/');
       } else {
         res.render('admin/message-browse-recv-page', {
           user: user,
@@ -61,13 +61,13 @@ module.exports = {
     if (message.title && message.body && message.to) {
       message.save(function(err) {
         if (err) {
-          error(res, err, '/admin/messages/');
+          error(res, err, 'admin/messages/');
         } else {
-          info(res, '成功发送给' + message.to + '！', '/admin/messages/');
+          info(res, '成功发送给' + message.to + '！', 'admin/messages/');
         }
       });
     } else {
-      error(res, '参数错误！', '/admin/messages/');
+      error(res, '参数错误！', 'admin/messages/');
     }
   },
 
@@ -95,9 +95,9 @@ module.exports = {
       _id: id
     }, function (err) {
       if (err) {
-        error(res, err, '/admin/messages/');
+        error(res, err, 'admin/messages/');
       } else {
-        info(res, '成功删除消息！', '/admin/messages/');
+        info(res, '成功删除消息！', 'admin/messages/');
       }
     });
   }

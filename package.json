@@ -12,6 +12,7 @@
     "mongodb": "*",
     "connect-mongo": "*",
     "mongoose": "*",
+    "strftime": "*",
     "marked": "*",
     "async": "*"
   }

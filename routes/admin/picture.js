@@ -10,14 +10,14 @@ module.exports = {
   createView: function createView(req, res) {
     res.render('admin/picture-edit-page', {
       title: '新建图片',
-      actionUrl: '/admin/pictures/new/',
+      actionUrl: 'admin/pictures/new/',
       pic: {}
     });
   },
   create: function create(req, res) {
     var src = req.files.pic.file.path;
     if (src) {
-      src = '/uploads/' + src.substr(src.lastIndexOf(require('path').sep)+1);
+      src = 'uploads/' + src.substr(src.lastIndexOf(require('path').sep)+1);
     }
     var title = req.body.pic.title;
     var description = req.body.pic.description;
@@ -32,9 +32,9 @@ module.exports = {
       });
       pic.save(function(err) {
         if (err) {
-          error(res, err, '/admin/pictures/');
+          error(res, err, 'admin/pictures/');
         } else {
-          info(res, err, '/admin/pictures/');
+          info(res, err, 'admin/pictures/');
         }
       });
     }
@@ -47,7 +47,7 @@ module.exports = {
     }, function(err, pic) {
       res.render('admin/picture-edit-page', {
         title: '编辑' + pic.title,
-        actionUrl: '/admin/pictures/update/',
+        actionUrl: 'admin/pictures/update/',
         pic: pic
       });
     });
@@ -69,13 +69,13 @@ module.exports = {
         update: new Date()
       }, function(err) {
         if (err) {
-          error(res, err, '/admin/pictures/');
+          error(res, err, 'admin/pictures/');
         } else {
-          info(res, '完成！', '/admin/pictures/');
+          info(res, '完成！', 'admin/pictures/');
         }
       });
     } else {
-      error(res, '参数错误！', '/admin/pictures/');
+      error(res, '参数错误！', 'admin/pictures/');
     }
   },
 
@@ -85,9 +85,9 @@ module.exports = {
       _id: id
     }, function(err) {
       if (err) {
-        error(res, err, '/admin/pictures/');
+        error(res, err, 'admin/pictures/');
       } else {
-        info(res, '完成。', '/admin/pictures/');
+        info(res, '完成。', 'admin/pictures/');
       }
     });
   },
@@ -103,7 +103,7 @@ module.exports = {
       }
     }, function(err, results) {
       if (err) {
-        error(res, err, '/admin/pictures/');
+        error(res, err, 'admin/pictures/');
       } else {
         res.render('admin/picture-browse-page', {
           pics: results.pics,

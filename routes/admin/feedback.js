@@ -45,9 +45,9 @@ exports.del = function (req, res) {
   var id = req.param('id');
   model.Feedback.remove({_id: id}, function (err) {
     if (err) {
-      error(res, err, '/admin');
+      error(res, err, 'admin');
     } else {
-      info(res, err, '/admin/feedbacks');
+      info(res, err, 'admin/feedbacks');
     }
   });
 };

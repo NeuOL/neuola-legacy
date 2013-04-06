@@ -6,11 +6,12 @@ html
     else
       title Neuola
     block head
-      link(rel='stylesheet', href=_('/stylesheets/bootstrap/bootstrap.css'))
-      link(rel='stylesheet', href=_('/stylesheets/neuola.css'))
-      script(src=_("/javascripts/jquery.js"))
+      base(href=basePath)
+      link(rel='stylesheet', href='stylesheets/bootstrap/bootstrap.css')
+      link(rel='stylesheet', href='stylesheets/neuola.css')
+      script(src='javascripts/jquery.js')
 
   body
     block content
 
-    script(src=_("/javascripts/bootstrap.js"))
+    script(src='javascripts/bootstrap.js')

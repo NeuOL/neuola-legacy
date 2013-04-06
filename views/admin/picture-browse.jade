@@ -1,5 +1,5 @@
 .action-bar
-  form(action=_('/admin/pictures/'),method='GET').form-inline
+  form(action='admin/pictures/',method='GET').form-inline
     label(for='catalog-list') 分类：
     .input-append
       input(
@@ -10,7 +10,7 @@
       )
 
       button(type='submit').btn.btn-primary 转到
-  a(href=_('/admin/pictures/new/')).btn.btn-success 新建图片
+  a(href='admin/pictures/new/').btn.btn-success 新建图片
   .clearfix
 
 table.table.table-hover
@@ -22,12 +22,12 @@ table.table.table-hover
   tbody
     each pic in pics
       tr 
-        td: a(href=_(pic.src),title=_(pic.src))= pic.title
+        td: a(href=pic.src,title=pic.src)= pic.title
         td= pic.update
         td= pic.tag
         td.action
-          a(href=_('/admin/pictures/update/')+pic.id).btn.btn-mini
+          a(href='admin/pictures/update/'+pic.id).btn.btn-mini
             | 编辑
           | 
-          a(href=_('/admin/pictures/del/')+pic.id).btn.btn-mini
+          a(href='admin/pictures/del/'+pic.id).btn.btn-mini
             | 删除

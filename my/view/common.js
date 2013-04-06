@@ -7,10 +7,12 @@ module.exports = {
     });
   },
 
-  info: function info(res, message, link) {
+  info: function info(res, message, link, refresh) {
+    if (!refresh) refresh = 5;
     res.render('done', {
       message: message,
-      link: link
+      link: link,
+      refresh: refresh
     });
   }
 };

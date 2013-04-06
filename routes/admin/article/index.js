@@ -22,9 +22,9 @@ exports.createView = function createView(req, res) {
   }, function(err, results) {
     res.render('admin/article-edit-page', {
       title: '创建新文章',
-      post: {catalog:{}},
+      post: {catalog:{},author:{},source:{}},
       catalogs: results.catalogs,
-      actionUrl: '/admin/article/new'
+      actionUrl: 'admin/article/new'
     });
   });
 };
@@ -40,11 +40,14 @@ exports.create = function create(req, res) {
       body: req.body.post.body,
       catalog: req.body.post.catalog,
       tag: tags,
+      source: {
+        name: req.body.post.author,
+        link: req.body.post.source
+      },
       author: req.session.user._id,
       date: new Date(),
       url: req.body.post.url ? req.body.post.url : req.body.post.title
     };
-    console.log(doc);
 
     var post = new model.Post(doc);
     post.save(function(err) {
@@ -52,15 +55,15 @@ exports.create = function create(req, res) {
         res.render('error', {
           title: '出错了',
           message: '保存错误：' + err,
-          link: '/admin/article/new'
+          link: 'admin/article/new'
         });
-        common.error(res, err, '/admin/article/new');
+        common.error(res, err, 'admin/article/new');
       } else {
-        common.info(res, '保存成功！', '/admin/articles/');
+        common.info(res, '保存成功！', 'admin/articles/');
       }
     });
   } else {
-    common.error(res, '错误参数！', '/admin/');
+    common.error(res, '错误参数！', 'admin/');
   }
 };
 
@@ -71,13 +74,12 @@ exports.remove = function remove(req, res) {
   var catalog = req.params.catalog;
   var url = req.params.url;
   model.Post.remove({
-    catalog: catalog,
     url: url
   }, function(err, post) {
     if (err) {
-      common.error(res, err, '/admin/');
+      common.error(res, err, 'admin/');
     } else {
-      common.info(res, '删除文档。', '/admn/');
+      common.info(res, '删除文档。', 'admin/');
     }
   });
 };
@@ -103,7 +105,7 @@ exports.updateView = function updateView(req, res) {
         title: '正在编辑' + results.post.title,
         post: results.post,
         catalogs: results.catalogs,
-        actionUrl: '/admin/article/edit/' + results.post.url
+        actionUrl: 'admin/article/edit/' + results.post.url
       });
     }
   });
@@ -137,9 +139,9 @@ exports.update = function update(req, res) {
       author: author
     }, doc, {}, function(err) {
       if (err) {
-        common.error(res, err, '/admin/');
+        common.error(res, err, 'admin/');
       } else {
-        common.info(res, '完成编辑！', '/admin/articles/');
+        common.info(res, '完成编辑！', 'admin/articles/');
       }
     });
   }
@@ -188,7 +190,7 @@ exports.browse = function browse(req, res) {
         posts: results.posts
       });
     } else {
-      common.error(res, err, '/admin/');
+      common.error(res, err, 'admin/');
     }
   });
 };

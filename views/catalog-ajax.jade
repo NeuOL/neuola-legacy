@@ -1,6 +1,9 @@
-if posts.length > 0
-  .date #{posts[0].date.getMonth()+1}月#{posts[0].date.getDate()}日
+- var d = null
+for post in posts
+  if d != post.date.toDateString()
+    .date #{post.date.getMonth()+1}月#{post.date.getDate()}日
+    - d = post.date.toDateString()
   .text 「文章」 
-    a(href=_('/article/'+posts[0].url)) #{posts[0].title}
+    a(href='article/'+post.url) #{post.title}
 else
   .no-result 还没有文章哦~

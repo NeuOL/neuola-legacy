@@ -1,9 +1,12 @@
 extends site
 
+if typeof refresh == 'undefined'
+  - var refresh = 5
+
 block append head
   meta(
     http-equiv='refresh'
-    content='5; url='+_(link)
+    content=refresh+'; url='+(link[0]=='/'?link:basePath+link)
   )
   style
     .secs {
@@ -14,7 +17,7 @@ block append head
       $('.secs').css('display', 'inline');
       setInterval(function () {
         var sec = parseInt($('#seconds').text());
-        $('#seconds').text(--sec);
+        $('#seconds').text(sec >= 0 ? --sec : 0);
       }, 1000);
     });
 
@@ -22,9 +25,9 @@ block main-stage
   .hero-unit
     h1 完成！ ^_^
     p= message
-    a(href=_(link)).btn.btn-primary
+    a(href=link).btn.btn-primary
       span.secs
-        span#seconds 5
+        span#seconds= refresh
         | 秒后
       继续
 

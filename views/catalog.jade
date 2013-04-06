@@ -1,7 +1,7 @@
 extends site
 
 block append head 
-  link(rel='stylesheet', href=_('/stylesheets/catalog.css'))
+  link(rel='stylesheet', href='stylesheets/catalog.css')
 
 block main-stage
   .main-stage-inner 
@@ -17,13 +17,11 @@ block main-stage
         .year-month= post.date.getFullYear()+' / '+(post.date.getMonth()+1)
       .box
         .title
-          a(href=_('/article/'+post.url))= post.title
+          a(href='article/'+post.url)= post.title
         .description !{post.html}
         .tags
           each t in post.tag
-            span.tag: a(href=_('/articles/?tag='+t))= '#'+t
-      .action
-        // a(href=_('/comment/'+post.url)).btn.btn-mini 回复
+            span.tag: a(href='articles/?tag=')= '#'+t
       .clearfix
 
     .articles
@@ -56,7 +54,7 @@ block main-stage
       .sidebar-box.search-box
         .title 搜索
         .content
-          form(action=_('/articles/'), method='GET')
+          form(action='articles/', method='GET')
             .input-append
               input(type='text',name='tag',placeholder='发现有趣的东西~').span2
               button(type='submit').btn.btn-primary 搜索

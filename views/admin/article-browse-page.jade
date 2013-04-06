@@ -4,10 +4,10 @@ block append breadcrumb
   if catalog.id
     li
       span.divider /
-      a(href=_('/admin/articles/catalog/view/')+catalog.id)= catalog.name
+      a(href='admin/articles/catalog/view/'+catalog.id)= catalog.name
   li
     span.divider /
-    a(href=_('/admin/article/new')): i.icon-plus
+    a(href='admin/article/new'): i.icon-plus
 
 block admin-stage
   include article-browse

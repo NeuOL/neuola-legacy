@@ -4,20 +4,20 @@ block content
   .nav.navbar.navbar-static-top
     .navbar-inner
       .container
-        span.brand= 「发现」
+        span.brand 「发现」
         ul.nav
           block navbar
             li
-              a(href=_("/")) 主页
+              a(href='') 主页
             li
-              a(href=_("/catalog/explore")).catalog 精选
+              a(href='catalog/explore').catalog 精选
             li
-              a(href=_("/catalog/news")).catalog 活动
+              a(href='catalog/news').catalog 活动
             li
-              a(href=_("/about")) 关于
+              a(href='about') 关于
             
         if session.user 
-          a(href=_('/user/logout')).btn.pull-right 退出
+          a(href='user/logout').btn.pull-right 退出
 
   .main-stage.container
     block main-stage

@@ -21,12 +21,12 @@ exports.submit = function (req, res) {
     });
     fb.save(function(err) {
       if (err) {
-        error(res, '不好意思，好像出了点问题……', '/');
+        error(res, '不好意思，好像出了点问题……', '');
       } else {
-        info(res, '谢谢您的支持！', '/');
+        info(res, '谢谢您的支持！', '');
       }
     });
   } else {
-    error(res, '参数错误！', '/');
+    error(res, '参数错误！', '');
   }
 };

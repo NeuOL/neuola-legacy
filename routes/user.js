@@ -13,7 +13,7 @@ var common = require('../my/view/common');
  */
 exports.checkLogin = function checkLogin(req, res, next) {
   if (! req.session.user) {
-    return res.redirect('/user/login');
+    return common.error(res, '请先登陆吧。', 'user/login');
   } else {
     next();
   }
@@ -29,7 +29,8 @@ exports.registerView = function registerView(req, res) {
     });
   } else {
     res.render('admin/user-edit-page', {
-      title: '添加新用户'
+      title: '添加新用户',
+      actionUrl: 'user/register'
     });
   }
 };
@@ -54,13 +55,13 @@ exports.register = function register(req, res) {
     });
     user.save(function(err) {
       if (!err) {
-        common.info(res, '成功注册！请等候审核。', '/user/login');
+        common.info(res, '成功注册！请等候审核。', 'user/login');
       } else {
-        common.error(res, err, '/user/register');
+        common.error(res, err, 'user/register');
       }
     });
   } else {
-    common.error(res, '参数错误！', '/user/register');
+    common.error(res, '参数错误！', 'user/register');
   }
 };
 
@@ -73,7 +74,7 @@ exports.loginView = function loginView(req, res) {
       title: '登陆'
     });
   } else {
-    res.redirect('/admin/');
+    common.info(res, '成功登陆~', 'admin/', 0);
   }
 };
 
@@ -87,13 +88,13 @@ exports.login = function login(req, res) {
     if (user && username == user.name && password == user.password && user.verified) {
       req.session.user = user.toJSON();
       req.session.user.loginDate = new Date;
-      common.info(res, '成功登陆~', '/admin/');
+      common.info(res, '成功登陆~', 'admin/');
     } else {
       var message = '用户名或密码错误！';
       if (user && ! user.verified) {
         message = '用户尚未激活。';
       }
-      common.error(res, message, '/user/login');
+      common.error(res, message, 'user/login');
     } 
   });
 };
@@ -103,7 +104,7 @@ exports.login = function login(req, res) {
  */
 exports.logout = function logout(req, res) {
   req.session.user = null;
-  common.info(res, '已经安全退出本系统。', '/user/login');
+  common.info(res, '已经安全退出本系统。', 'user/login');
 };
 
 exports.browse = function browse(req, res) {
@@ -114,7 +115,7 @@ exports.browse = function browse(req, res) {
         users: users
       });
     } else {
-      common.error(res, err, '/admin/');
+      common.error(res, err, 'admin/');
     }
   });
 };
@@ -125,10 +126,10 @@ exports.updateView = function updateView(req, res) {
     _id: id
   }, function(err, user) {
     if (err) {
-      common.error(res, err, '/admin/users/');
+      common.error(res, err, 'admin/users/');
     } else {
       res.render('admin/user-edit-page', {
-        actionUrl: '/admin/users/edit/' + id,
+        actionUrl: 'admin/users/edit/' + id,
         title: '正在编辑用户“' + user.name + '”',
         user: user
       });
@@ -155,12 +156,12 @@ exports.update = function update(req, res) {
     _id: id
   }, updated, function(err, user) {
     if (err) {
-      common.error(res, err, '/admin/users');
+      common.error(res, err, 'admin/users');
     } else {
       if (id == req.session.user._id) {
         req.session.user = user;
       }
-      common.info(res, '完成编辑！', '/admin/users/');
+      common.info(res, '完成编辑！', 'admin/users/');
     }
   });
 };
@@ -174,9 +175,9 @@ exports.verify = function verify(req, res) {
     _id: id
   }, updated, function(err, user) {
     if (err) {
-      common.error(res, err, '/admin/users/');
+      common.error(res, err, 'admin/users/');
     } else {
-      common.info(res, '完成激活！', '/admin/users/');
+      common.info(res, '完成激活！', 'admin/users/');
     }
   });
 };

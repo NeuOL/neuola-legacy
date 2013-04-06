@@ -1,6 +1,7 @@
+
 .main-stage-inner
-  form(action=_(actionUrl),method='POST').form-horizontal
-    input(type='hidden',name='post[oldId]',value='#{post.url}')
+  form(action=actionUrl,method='POST').form-horizontal
+    input(type='hidden',name='post[oldId]',value=post.url)
 
     .control-group
       label(for='title').control-label 标题
@@ -10,6 +11,22 @@
           name='post[title]'
           value=post.title
         )#title.span6
+    .control-group
+      label(for='author').control-label 作者
+      .controls
+        input(
+          type='text'
+          name='post[author]'
+          value=post.source.name
+        )#author.span6
+    .control-group
+      label(for='source').control-label 链接
+      .controls
+        input(
+          type='text'
+          name='post[source]'
+          value=post.source.link
+        )#source.span6
     .control-group
       label(for='body').control-label 内容
       .controls 
