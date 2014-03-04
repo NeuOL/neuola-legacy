@@ -8,11 +8,11 @@ block append head
     http-equiv='refresh'
     content=refresh+'; url='+(link[0]=='/'?link:basePath+link)
   )
-  style
+  style.
     .secs {
       display: none;
     }
-  script
+  script.
     $(function() {
       $('.secs').css('display', 'inline');
       setInterval(function () {
